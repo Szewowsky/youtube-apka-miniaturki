@@ -63,10 +63,22 @@ export function utworzPrzycisk(miejsce: Miejsce, odczytajId: () => string | unde
   const ustaw = (stan: Stan, tekst: string) => {
     przycisk.dataset.stan = stan;
     napis.textContent = tekst;
+    // Na małych Miniaturkach napis bywa ucięty: pełna treść w dymku.
+    przycisk.title = stan === 'zwykly' ? TEKSTY_PRZYCISKU.podpowiedz : tekst;
     // aria-disabled zamiast disabled: przycisk nie traci fokusu klawiatury w trakcie pobierania.
     przycisk.setAttribute('aria-disabled', String(stan === 'pobieram'));
   };
   ustaw('zwykly', TEKSTY_PRZYCISKU.etykieta);
+
+  // Środkowy przycisk myszy na karcie otworzyłby Film w nowej karcie.
+  const zablokuj = (zdarzenie: MouseEvent) => {
+    zdarzenie.preventDefault();
+    zdarzenie.stopPropagation();
+  };
+  przycisk.addEventListener('auxclick', zablokuj);
+  przycisk.addEventListener('mousedown', (zdarzenie) => {
+    if (zdarzenie.button === 1) zablokuj(zdarzenie);
+  });
 
   przycisk.addEventListener('click', async (zdarzenie) => {
     // Na kartach przycisk siedzi w linku do Filmu: nie otwieramy Filmu.
