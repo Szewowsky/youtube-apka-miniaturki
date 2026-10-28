@@ -1,6 +1,7 @@
 import { KOMUNIKATY, TEKSTY_APLIKACJI } from '../rdzen/komunikaty';
 import { pobierzMetadane } from '../rdzen/metadane';
 import type { WynikPobrania } from '../rdzen/pobieranie';
+import { jestJakoscia, odczytajJakosc, zapiszJakosc } from '../rdzen/ustawienia';
 import { rozpoznajListe, type Pozycja, type StatusPozycji } from '../rdzen/rozpoznawanie';
 import type { ZleceniePobrania } from '../wiadomosci';
 
@@ -23,6 +24,20 @@ element('opis').textContent = TEKSTY_APLIKACJI.opis;
 element('etykieta-linkow').textContent = TEKSTY_APLIKACJI.poleLinkow;
 przyciskRozpoznaj.textContent = TEKSTY_APLIKACJI.rozpoznaj;
 przyciskPobierz.textContent = TEKSTY_APLIKACJI.pobierzWszystkie;
+element('etykieta-jakosci').textContent = TEKSTY_APLIKACJI.jakosc;
+
+// Przełącznik Jakości: wybór zapisywany w chrome.storage.sync, tło czyta go przy każdym pobraniu.
+const opcjeJakosci = [...document.querySelectorAll<HTMLInputElement>('input[name="jakosc"]')];
+for (const opcja of opcjeJakosci) {
+  const podpis = opcja.nextElementSibling;
+  if (podpis && jestJakoscia(opcja.value)) podpis.textContent = TEKSTY_APLIKACJI.jakosci[opcja.value];
+  opcja.addEventListener('change', () => {
+    if (opcja.checked && jestJakoscia(opcja.value)) void zapiszJakosc(chrome.storage.sync, opcja.value);
+  });
+}
+void odczytajJakosc(chrome.storage.sync).then((jakosc) => {
+  for (const opcja of opcjeJakosci) opcja.checked = opcja.value === jakosc;
+});
 
 const OPIS_STATUSU: Record<Exclude<StatusPozycji, 'film'>, string> = {
   short: KOMUNIKATY.short,
