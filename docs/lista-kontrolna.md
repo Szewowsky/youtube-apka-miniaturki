@@ -32,3 +32,8 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
   https://youtu.be/dQw4w9WgXcQ
   ```
 - **Oczekiwany wynik:** Nad listą „Filmów do pobrania: 4, pominiętych: 3”. Cztery pierwsze pozycje pokazują prawdziwy tytuł i kanał (np. „Me at the zoo” / „jawed”) i status „Czeka”. Short ma status „To jest Short - pomijam”, tekst „to nie link” - „To nie jest link do filmu YouTube”, ostatni link - „Duplikat”.
+
+### 5. Film z dziwnym tytułem (sprawdzasz po T3, gdy działa pobieranie)
+
+- **Krok:** W Aplikacji wklej `https://www.youtube.com/watch?v=9bZkp7q19f0` (tytuł zawiera ukośnik „M/V”), kliknij „Rozpoznaj”, potem „Pobierz wszystkie”.
+- **Oczekiwany wynik:** W Pobranych pojawia się plik `PSY - GANGNAM STYLE(강남스타일) M-V - officialpsy.jpg`, który otwiera się w Finderze podglądem (spacja).
