@@ -23,4 +23,10 @@ describe('manifest Wtyczki', () => {
   it('ma Ikony Wtyczki w rozmiarach 16, 32, 48 i 128', () => {
     expect(Object.keys(manifest.icons)).toEqual(['16', '32', '48', '128']);
   });
+
+  it('wstrzykuje Przycisk pobierania tylko na www.youtube.com', () => {
+    expect(manifest.content_scripts.flatMap((skrypt) => [...skrypt.matches])).toEqual([
+      'https://www.youtube.com/*',
+    ]);
+  });
 });

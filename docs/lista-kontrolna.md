@@ -27,7 +27,7 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
   https://youtu.be/jNQXAC9IVRw?si=abc123
   https://m.youtube.com/watch?v=9bZkp7q19f0
   https://www.youtube.com/embed/kJQP7kiw5Fk
-  https://www.youtube.com/shorts/tPEE9ZwTmy0
+  https://www.youtube.com/shorts/RGtFAx8rSJU
   to nie link
   https://youtu.be/dQw4w9WgXcQ
   ```
@@ -62,3 +62,35 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 
 - **Krok:** Ustaw „Średnia”, zamknij całą przeglądarkę (Cmd+Q), otwórz ją i kliknij Ikonę Wtyczki.
 - **Oczekiwany wynik:** W Aplikacji zaznaczona jest „Średnia”.
+
+## Przycisk pobierania pod Filmem
+
+### 11. Przycisk pod Filmem
+
+- **Krok:** Otwórz `https://www.youtube.com/watch?v=dQw4w9WgXcQ` i kliknij „Miniaturka” w rzędzie pod Filmem.
+- **Oczekiwany wynik:** Przycisk „Miniaturka” ze strzałką stoi zaraz za „Udostępnij” i wygląda jak sąsiednie przyciski. Po kliknięciu pokazuje „Pobieram…”, potem zielone „Gotowe”, a w Pobranych jest `Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster) - Rick Astley.jpg`. Po ok. 3 s napis wraca do „Miniaturka”.
+
+### 12. Jasny i ciemny motyw YouTube
+
+- **Krok:** W YouTube kliknij awatar → Wygląd → przełącz Jasny / Ciemny i spójrz na rząd przycisków pod Filmem.
+- **Oczekiwany wynik:** W obu motywach „Miniaturka” ma takie samo tło i kolor tekstu jak „Udostępnij”; napis „Gotowe” jest czytelny także, gdy kursor zostaje na przycisku.
+
+### 13. Przejście do innego Filmu bez przeładowania
+
+- **Krok:** Na stronie Filmu kliknij Film z kolumny po prawej. Kliknij „Miniaturka”.
+- **Oczekiwany wynik:** Przycisk jest na nowej stronie dokładnie raz; pobrany plik ma tytuł NOWEGO Filmu.
+
+### 14. Strona Shorta
+
+- **Krok:** Otwórz `https://www.youtube.com/shorts` (dowolny Short).
+- **Oczekiwany wynik:** Nigdzie nie ma przycisku „Miniaturka”.
+
+### 15. Stara karta po aktualizacji Wtyczki
+
+- **Krok:** Zostaw otwartą kartę z Filmem, w `chrome://extensions` kliknij „Odśwież” przy Wtyczce, wróć do karty (bez odświeżania) i kliknij „Miniaturka”.
+- **Oczekiwany wynik:** Przycisk pokazuje „Odśwież stronę”. Po odświeżeniu karty (Cmd+R) pobieranie działa.
+
+### 16. Wyłączenie Wtyczki
+
+- **Krok:** W `chrome://extensions` wyłącz Wtyczkę przełącznikiem i odśwież kartę z Filmem.
+- **Oczekiwany wynik:** Pod Filmem nie ma przycisku „Miniaturka” ani żadnych śladów. Włącz Wtyczkę z powrotem.

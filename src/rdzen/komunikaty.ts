@@ -31,3 +31,8 @@ export const TEKSTY_APLIKACJI = {
   podsumowanieRozpoznania: (filmow: number, pominietych: number) =>
     `Filmów do pobrania: ${filmow}` + (pominietych ? `, pominiętych: ${pominietych}` : ''),
 } as const;
+
+export const TEKSTY_PRZYCISKU = {
+  etykieta: 'Miniaturka',
+  podpowiedz: 'Pobierz Miniaturkę',
+} as const;

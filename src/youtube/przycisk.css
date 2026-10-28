@@ -1,0 +1,72 @@
+/* Przycisk pobierania na YouTube. Kolory na sztywno: zmienne --yt-spec-* są puste,
+   a zahashowane zmienne YouTube zmieniają się przy wdrożeniach (docs/selektory-youtube.md). */
+
+.mty-przycisk {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, opacity 0.15s;
+}
+
+.mty-przycisk[aria-disabled='true'] {
+  cursor: progress;
+}
+
+.mty-ikona {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+/* Pod Filmem: kopia sąsiednich przycisków YouTube (40 px, zaokrąglenie 20 px). */
+.mty-przycisk-film {
+  height: 40px;
+  padding: 0 16px 0 12px;
+  margin-left: 8px;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 40px;
+  background: rgba(0, 0, 0, 0.05);
+  color: #0f0f0f;
+}
+
+.mty-przycisk-film[data-stan='zwykly']:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+html[dark] .mty-przycisk-film {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f1f1f1;
+}
+
+html[dark] .mty-przycisk-film[data-stan='zwykly']:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mty-przycisk[data-stan='gotowe'] {
+  color: #fff;
+  background: #1e8e3e;
+}
+
+.mty-przycisk[data-stan='blad'] {
+  color: #fff;
+  background: #cc0000;
+}
+
+html[dark] .mty-przycisk[data-stan='gotowe'] {
+  color: #0f0f0f;
+  background: #81c995;
+}
+
+html[dark] .mty-przycisk[data-stan='blad'] {
+  color: #0f0f0f;
+  background: #f28b82;
+}
