@@ -1,6 +1,10 @@
 import { KOMUNIKATY, TEKSTY_APLIKACJI } from '../rdzen/komunikaty';
 import { pobierzMetadane } from '../rdzen/metadane';
+import type { WynikPobrania } from '../rdzen/pobieranie';
 import { rozpoznajListe, type Pozycja, type StatusPozycji } from '../rdzen/rozpoznawanie';
+import type { ZleceniePobrania } from '../wiadomosci';
+
+const PRZERWA_MIEDZY_POBRANIAMI_MS = 300;
 
 function element<T extends HTMLElement>(id: string): T {
   const znaleziony = document.getElementById(id);
@@ -27,7 +31,17 @@ const OPIS_STATUSU: Record<Exclude<StatusPozycji, 'film'>, string> = {
   ponadLimit: KOMUNIKATY.ponadLimit,
 };
 
-type Wiersz = { pozycja: Pozycja; tytul: HTMLElement; kanal: HTMLElement; status: HTMLElement };
+type StanWiersza = 'czeka' | 'pobieram' | 'gotowe' | 'blad' | 'pominiety';
+type Wiersz = {
+  pozycja: Pozycja;
+  li: HTMLLIElement;
+  tytul: HTMLElement;
+  kanal: HTMLElement;
+  status: HTMLElement;
+};
+
+let wiersze: Wiersz[] = [];
+let trwaPobieranie = false;
 
 function utworzWiersz(pozycja: Pozycja): Wiersz {
   const li = document.createElement('li');
@@ -56,7 +70,7 @@ function utworzWiersz(pozycja: Pozycja): Wiersz {
 
   li.append(opis, status);
   lista.append(li);
-  return { pozycja, tytul, kanal, status };
+  return { pozycja, li, tytul, kanal, status };
 }
 
 async function uzupelnijMetadane(wiersz: Wiersz): Promise<void> {
@@ -72,10 +86,26 @@ async function uzupelnijMetadane(wiersz: Wiersz): Promise<void> {
   }
 }
 
+function ustawStan(wiersz: Wiersz, stan: StanWiersza, tekst: string): void {
+  wiersz.li.dataset.status = stan;
+  wiersz.status.textContent = tekst;
+}
+
+function doPobrania(): Wiersz[] {
+  return wiersze.filter(
+    (w) => w.pozycja.status === 'film' && w.li.dataset.status !== 'gotowe',
+  );
+}
+
+function odswiezPrzyciski(): void {
+  przyciskRozpoznaj.disabled = trwaPobieranie;
+  przyciskPobierz.disabled = trwaPobieranie || doPobrania().length === 0;
+}
+
 function rozpoznaj(): void {
   const pozycje = rozpoznajListe(pole.value);
   lista.replaceChildren();
-  const wiersze = pozycje.map(utworzWiersz);
+  wiersze = pozycje.map(utworzWiersz);
   const filmy = wiersze.filter((w) => w.pozycja.status === 'film');
 
   podsumowanie.hidden = pozycje.length === 0;
@@ -84,7 +114,41 @@ function rozpoznaj(): void {
     pozycje.length - filmy.length,
   );
 
+  odswiezPrzyciski();
   void Promise.all(filmy.map(uzupelnijMetadane));
 }
 
+async function pobierzJeden(id: string): Promise<WynikPobrania> {
+  const zlecenie: ZleceniePobrania = { typ: 'pobierz', id };
+  try {
+    const wynik = (await chrome.runtime.sendMessage(zlecenie)) as WynikPobrania | undefined;
+    return wynik ?? { status: 'blad', komunikat: KOMUNIKATY.brakPolaczenia };
+  } catch {
+    return { status: 'blad', komunikat: KOMUNIKATY.odswiezStrone };
+  }
+}
+
+const czekaj = (ms: number) => new Promise((rozwiaz) => setTimeout(rozwiaz, ms));
+
+// Po kolei, z przerwą, żeby nie zalać serwerów YouTube. Pobrane już pozycje są pomijane,
+// więc ponowne kliknięcie dociąga tylko te z błędem.
+async function pobierzWszystkie(): Promise<void> {
+  const kolejka = doPobrania();
+  trwaPobieranie = true;
+  odswiezPrzyciski();
+  kolejka.forEach((w) => ustawStan(w, 'czeka', KOMUNIKATY.czeka));
+
+  for (const [numer, wiersz] of kolejka.entries()) {
+    if (numer > 0) await czekaj(PRZERWA_MIEDZY_POBRANIAMI_MS);
+    ustawStan(wiersz, 'pobieram', KOMUNIKATY.pobieram);
+    const wynik = await pobierzJeden(wiersz.pozycja.id ?? '');
+    if (wynik.status === 'gotowe') ustawStan(wiersz, 'gotowe', KOMUNIKATY.gotowe);
+    else ustawStan(wiersz, 'blad', wynik.komunikat);
+  }
+
+  trwaPobieranie = false;
+  odswiezPrzyciski();
+}
+
 przyciskRozpoznaj.addEventListener('click', rozpoznaj);
+przyciskPobierz.addEventListener('click', () => void pobierzWszystkie());

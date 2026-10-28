@@ -37,3 +37,18 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 
 - **Krok:** W Aplikacji wklej `https://www.youtube.com/watch?v=9bZkp7q19f0` (tytuł zawiera ukośnik „M/V”), kliknij „Rozpoznaj”, potem „Pobierz wszystkie”.
 - **Oczekiwany wynik:** W Pobranych pojawia się plik `PSY - GANGNAM STYLE(강남스타일) M-V - officialpsy.jpg`, który otwiera się w Finderze podglądem (spacja).
+
+### 6. Pobieranie kilku Miniaturek
+
+- **Krok:** W Aplikacji wklej trzy linki: `https://youtu.be/dQw4w9WgXcQ`, `https://youtu.be/jNQXAC9IVRw`, `https://www.youtube.com/watch?v=aaaaaaaaaaa`. Kliknij „Rozpoznaj”, potem „Pobierz wszystkie”.
+- **Oczekiwany wynik:** Statusy zmieniają się po kolei: „Czeka” → „Pobieram…” → „Gotowe”. W Pobranych są `Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster) - Rick Astley.jpg` (1280×720) i `Me at the zoo - jawed.jpg` (480×360, stary Film bez wersji HD - to poprawne). Trzecia pozycja: „Film niedostępny (prywatny lub usunięty)”.
+
+### 7. Drugie pobranie tego samego Filmu
+
+- **Krok:** Kliknij jeszcze raz „Rozpoznaj” i „Pobierz wszystkie” z tymi samymi linkami.
+- **Oczekiwany wynik:** Poprzednie pliki zostają, nowe mają dopisek ` (1)` w nazwie.
+
+### 8. Druga przeglądarka
+
+- **Krok:** Zainstaluj Wtyczkę z tego samego folderu `dist` w Brave, Arc albo Edge (jak w README) i pobierz jedną Miniaturkę.
+- **Oczekiwany wynik:** Plik ląduje w Pobranych tej przeglądarki z poprawną nazwą.
