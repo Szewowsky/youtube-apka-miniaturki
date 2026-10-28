@@ -9,9 +9,13 @@ describe('komunikaty', () => {
       duplikat: 'Duplikat',
       ponadLimit: 'Ponad limit 50',
       filmNiedostepny: 'Film niedostępny (prywatny lub usunięty)',
+      filmPrywatny: 'Film niedostępny (prywatny)',
+      filmUsuniety: 'Film niedostępny (usunięty)',
       brakPolaczenia: 'Brak połączenia - spróbuj ponownie',
       odswiezStrone: 'Odśwież stronę',
       gotowe: 'Gotowe',
+      czeka: 'Czeka',
+      pobieram: 'Pobieram…',
     });
   });
 
