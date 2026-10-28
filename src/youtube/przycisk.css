@@ -70,3 +70,50 @@ html[dark] .mty-przycisk[data-stan='blad'] {
   color: #0f0f0f;
   background: #f28b82;
 }
+
+/* Na karcie Filmu: lewy górny róg Miniaturki (prawy górny zajmuje podgląd wideo,
+   prawy dolny - czas trwania). Widoczny tylko po najechaniu na kartę albo w trakcie akcji. */
+.mty-przycisk-karta {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 3000;
+  height: 32px;
+  padding: 0 10px 0 6px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 32px;
+  max-width: calc(100% - 16px);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  /* Ukryty, ale nadal łapie kursor: podgląd wideo YouTube leży poza kartą i zabiera jej :hover. */
+  opacity: 0;
+}
+
+.mty-przycisk-karta .mty-napis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mty-przycisk-karta .mty-ikona {
+  width: 20px;
+  height: 20px;
+}
+
+yt-lockup-view-model:hover .mty-przycisk-karta,
+ytd-video-renderer:hover .mty-przycisk-karta,
+.mty-przycisk-karta:hover,
+.mty-przycisk-karta.mty-wskazany,
+.mty-przycisk-karta:focus-visible,
+.mty-przycisk-karta:not([data-stan='zwykly']) {
+  opacity: 1;
+}
+
+.mty-przycisk-karta[data-stan='zwykly']:hover {
+  background: #000;
+}
+
+/* Kursor nad przyciskiem na karcie: chowamy podgląd wideo YouTube, który go przykrywa. */
+html.mty-nad-przyciskiem #video-preview {
+  visibility: hidden !important;
+}

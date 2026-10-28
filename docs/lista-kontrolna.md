@@ -94,3 +94,35 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 
 - **Krok:** W `chrome://extensions` wyłącz Wtyczkę przełącznikiem i odśwież kartę z Filmem.
 - **Oczekiwany wynik:** Pod Filmem nie ma przycisku „Miniaturka” ani żadnych śladów. Włącz Wtyczkę z powrotem.
+
+## Przycisk pobierania na listach Filmów
+
+### 17. Strona główna
+
+- **Krok:** Otwórz `https://www.youtube.com/` (zalogowany), najedź myszką na Miniaturkę dowolnego Filmu.
+- **Oczekiwany wynik:** W lewym górnym rogu Miniaturki pojawia się czarny przycisk „Miniaturka”; bez najechania go nie widać. Nie zasłania czasu trwania (prawy dolny róg) ani tytułu. Przycisk zostaje widoczny także wtedy, gdy po 1-2 s ruszy podgląd wideo.
+
+### 18. Pobranie z karty bez otwierania Filmu
+
+- **Krok:** Kliknij „Miniaturka” na karcie.
+- **Oczekiwany wynik:** Film się NIE otwiera; przycisk pokazuje „Pobieram…”, potem „Gotowe”; w Pobranych jest plik z tytułem tego Filmu (tytuł oryginalny, nie przetłumaczony przez YouTube).
+
+### 19. Kanał, wyszukiwarka i kolumna obok Filmu
+
+- **Krok:** Sprawdź najechanie i jedno pobranie na `https://www.youtube.com/@YouTube/videos`, w wynikach `https://www.youtube.com/results?search_query=lofi` i w kolumnie po prawej na stronie dowolnego Filmu.
+- **Oczekiwany wynik:** Wszędzie przycisk działa jak w punkcie 18.
+
+### 20. Przewijanie
+
+- **Krok:** Na stronie kanału przewiń w dół, aż doładują się nowe Filmy, i najedź na jeden z nich.
+- **Oczekiwany wynik:** Nowe karty też mają przycisk.
+
+### 21. Shorty na listach
+
+- **Krok:** Na stronie głównej i w wynikach wyszukiwania znajdź półkę Shortów i najedź na Short.
+- **Oczekiwany wynik:** Na Shortach nie ma przycisku „Miniaturka”.
+
+### 22. Pięć pobrań z jednego kanału
+
+- **Krok:** Na `https://www.youtube.com/@YouTube/videos` pobierz kolejno 5 Miniaturek z kart.
+- **Oczekiwany wynik:** 5 plików w Pobranych, każdy z innym tytułem.
