@@ -52,3 +52,13 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 
 - **Krok:** Zainstaluj Wtyczkę z tego samego folderu `dist` w Brave, Arc albo Edge (jak w README) i pobierz jedną Miniaturkę.
 - **Oczekiwany wynik:** Plik ląduje w Pobranych tej przeglądarki z poprawną nazwą.
+
+### 9. Przełącznik Jakości
+
+- **Krok:** W Aplikacji wybierz kolejno „Najwyższa”, „Średnia”, „Niska” i za każdym razem pobierz `https://youtu.be/dQw4w9WgXcQ`. W Finderze zaznacz pliki i naciśnij Cmd+I (albo spójrz na kolumnę „Wymiary” w podglądzie).
+- **Oczekiwany wynik:** Trzy pliki o wymiarach 1280×720, 640×480 (z czarnymi pasami) i 480×360 (z czarnymi pasami). Dwa kolejne mają dopisek ` (1)`, ` (2)`.
+
+### 10. Zapamiętanie Jakości
+
+- **Krok:** Ustaw „Średnia”, zamknij całą przeglądarkę (Cmd+Q), otwórz ją i kliknij Ikonę Wtyczki.
+- **Oczekiwany wynik:** W Aplikacji zaznaczona jest „Średnia”.

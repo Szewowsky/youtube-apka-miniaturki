@@ -2,7 +2,15 @@
 
 Wtyczka do przeglądarek Chrome, Brave, Arc i Edge, która pobiera Miniaturki filmów YouTube na komputer. Kliknięcie Ikony Wtyczki w pasku przeglądarki otwiera Aplikację: kartę, w którą wklejasz linki do filmów.
 
-> Stan: etap 1 w budowie. Aplikacja się otwiera, ale jeszcze niczego nie pobiera.
+> Stan: Aplikacja działa - wklejasz do 50 linków i pobierasz Miniaturki. Przycisk pobierania bezpośrednio na YouTube jest w budowie.
+
+## Jak używać
+
+1. Kliknij Ikonę Wtyczki w pasku przeglądarki. Otworzy się Aplikacja.
+2. Wklej linki do filmów YouTube, każdy w osobnej linii (do 50).
+3. Kliknij „Rozpoznaj”, sprawdź tytuły, potem „Pobierz wszystkie”. Pliki trafiają do folderu Pobrane jako `Tytuł - Kanał.jpg`.
+
+Jakość ustawiasz przełącznikiem w Aplikacji; wybór jest zapamiętany. Średnia (640×480) i Niska (480×360) mają proporcje 4:3, więc Miniaturka 16:9 ma w nich czarne pasy u góry i u dołu - to cecha plików YouTube, nie błąd Wtyczki. To samo dotyczy starych filmów bez wersji 1280×720: Wtyczka pobiera wtedy po cichu najlepszą dostępną.
 
 ## Instalacja (raz)
 

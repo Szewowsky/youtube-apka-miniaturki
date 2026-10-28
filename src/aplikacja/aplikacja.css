@@ -154,3 +154,47 @@ button.drugorzedny {
   color: var(--akcent);
   font-weight: 600;
 }
+
+.jakosc {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.przelacznik {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 3px;
+  border: 1px solid var(--ramka);
+  border-radius: 18px;
+  background: var(--karta);
+}
+
+.przelacznik input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.przelacznik span {
+  display: block;
+  padding: 7px 14px;
+  border-radius: 15px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--tekst-pomocniczy);
+}
+
+.przelacznik input:checked + span {
+  background: var(--tekst);
+  color: var(--tlo);
+  font-weight: 600;
+}
+
+.przelacznik input:focus-visible + span {
+  outline: 2px solid var(--akcent);
+  outline-offset: 1px;
+}

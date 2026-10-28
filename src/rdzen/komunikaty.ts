@@ -20,6 +20,12 @@ export const TEKSTY_APLIKACJI = {
   opis: 'Wklej linki do filmów YouTube, jeden pod drugim.',
   poleLinkow: 'Linki do filmów',
   rozpoznaj: 'Rozpoznaj',
+  jakosc: 'Jakość',
+  jakosci: {
+    max: 'Najwyższa (1280×720)',
+    sd: 'Średnia (640×480)',
+    hq: 'Niska (480×360)',
+  },
   pobierzWszystkie: 'Pobierz wszystkie',
   wczytuje: 'Wczytuję tytuł…',
   podsumowanieRozpoznania: (filmow: number, pominietych: number) =>
