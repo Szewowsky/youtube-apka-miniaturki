@@ -76,3 +76,81 @@ button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.akcje {
+  display: flex;
+  gap: 8px;
+}
+
+button.drugorzedny {
+  background: transparent;
+  color: var(--tekst);
+  border: 1px solid var(--ramka);
+}
+
+.lista {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pozycja {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--ramka);
+  border-radius: 12px;
+  background: var(--karta);
+}
+
+.pozycja-opis {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pozycja-tytul,
+.pozycja-kanal {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pozycja-tytul {
+  font-weight: 600;
+}
+
+.pozycja-kanal {
+  font-size: 13px;
+  color: var(--tekst-pomocniczy);
+}
+
+.pozycja-status {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--tekst-pomocniczy);
+}
+
+.pozycja[data-status='pominiety'] {
+  opacity: 0.65;
+}
+
+.pozycja[data-status='pobieram'] .pozycja-status {
+  color: var(--tekst);
+  font-weight: 600;
+}
+
+.pozycja[data-status='gotowe'] .pozycja-status {
+  color: #1e8e3e;
+  font-weight: 600;
+}
+
+.pozycja[data-status='blad'] .pozycja-status {
+  color: var(--akcent);
+  font-weight: 600;
+}

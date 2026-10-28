@@ -18,3 +18,17 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 
 - **Krok:** Kliknij Ikonę Wtyczki.
 - **Oczekiwany wynik:** Otwiera się nowa karta z Aplikacją: nagłówek „Miniaturki YouTube”, duże pole tekstowe na linki i wyszarzony przycisk „Pobierz wszystkie”, którego nie da się kliknąć. Nie wyskakuje żadne małe okienko pod ikoną.
+
+### 4. Rozpoznawanie linków
+
+- **Krok:** W Aplikacji wklej poniższe linki (każdy w osobnej linii) i kliknij „Rozpoznaj”:
+  ```
+  https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=42s
+  https://youtu.be/jNQXAC9IVRw?si=abc123
+  https://m.youtube.com/watch?v=9bZkp7q19f0
+  https://www.youtube.com/embed/kJQP7kiw5Fk
+  https://www.youtube.com/shorts/tPEE9ZwTmy0
+  to nie link
+  https://youtu.be/dQw4w9WgXcQ
+  ```
+- **Oczekiwany wynik:** Nad listą „Filmów do pobrania: 4, pominiętych: 3”. Cztery pierwsze pozycje pokazują prawdziwy tytuł i kanał (np. „Me at the zoo” / „jawed”) i status „Czeka”. Short ma status „To jest Short - pomijam”, tekst „to nie link” - „To nie jest link do filmu YouTube”, ostatni link - „Duplikat”.
