@@ -4,6 +4,7 @@ import type { WynikPobrania } from '../rdzen/pobieranie';
 import { jestJakoscia, odczytajJakosc, zapiszJakosc } from '../rdzen/ustawienia';
 import { rozpoznajListe, type Pozycja, type StatusPozycji } from '../rdzen/rozpoznawanie';
 import type { ZleceniePobrania } from '../wiadomosci';
+import { bladZMetadanych, doPobrania, liczbaFilmowDoPobrania, type PozycjaListy } from './lista';
 import { podzielNaglowek, podzielPodsumowanie, ZNAKI_STANU, type StanWiersza } from './wyglad';
 
 const PRZERWA_MIEDZY_POBRANIAMI_MS = 300;
@@ -51,8 +52,10 @@ const OPIS_STATUSU: Record<Exclude<StatusPozycji, 'film'>, string> = {
   ponadLimit: KOMUNIKATY.ponadLimit,
 };
 
-type Wiersz = {
+type Wiersz = PozycjaListy & {
   pozycja: Pozycja;
+  /** Odpowiedź oEmbed dla Filmu; pobieranie na nią czeka, żeby nie ruszać niedostępnych. */
+  metadane: Promise<void>;
   li: HTMLLIElement;
   znak: HTMLElement;
   tytul: HTMLElement;
@@ -104,14 +107,35 @@ function utworzWiersz(pozycja: Pozycja): Wiersz {
 
   li.append(znak, opis, kolumnaStanu);
   lista.append(li);
-  return { pozycja, li, znak, tytul, kanal, status };
+  return {
+    pozycja,
+    film: pozycja.status === 'film',
+    stan,
+    niedostepny: false,
+    metadane: Promise.resolve(),
+    li,
+    znak,
+    tytul,
+    kanal,
+    status,
+  };
 }
 
 async function uzupelnijMetadane(wiersz: Wiersz): Promise<void> {
   const id = wiersz.pozycja.id ?? '';
   const wynik = await pobierzMetadane(id, { fetch: (...a) => fetch(...a) });
   wiersz.tytul.classList.remove('wczytuje');
-  if (wynik.ok) {
+  const blad = bladZMetadanych(wynik);
+  if (blad !== null) {
+    // oEmbed potwierdził, że Filmu nie ma: od razu błąd, bez liczenia i bez pobierania.
+    // Wiersz w trakcie pobierania kończy je sam i pokaże wynik pobrania.
+    wiersz.niedostepny = true;
+    wiersz.tytul.textContent = wiersz.pozycja.link;
+    wiersz.kanal.textContent = '';
+    if (wiersz.stan === 'czeka') ustawStan(wiersz, 'blad', blad);
+    odswiezPodsumowanie();
+    odswiezPrzyciski();
+  } else if (wynik.ok) {
     wiersz.tytul.textContent = wynik.tytul;
     wiersz.kanal.textContent = wynik.kanal;
   } else {
@@ -122,39 +146,40 @@ async function uzupelnijMetadane(wiersz: Wiersz): Promise<void> {
 }
 
 function ustawStan(wiersz: Wiersz, stan: StanWiersza, tekst: string): void {
-  if (wiersz.li.dataset.status !== stan) wiersz.znak.innerHTML = ZNAKI_STANU[stan];
+  if (wiersz.stan !== stan) wiersz.znak.innerHTML = ZNAKI_STANU[stan];
+  wiersz.stan = stan;
   wiersz.li.dataset.status = stan;
   wiersz.status.textContent = tekst;
 }
 
-function doPobrania(): Wiersz[] {
-  return wiersze.filter(
-    (w) => w.pozycja.status === 'film' && w.li.dataset.status !== 'gotowe',
+function odswiezPodsumowanie(): void {
+  const filmow = liczbaFilmowDoPobrania(wiersze);
+  const pominietych = wiersze.filter((w) => !w.film).length;
+  const { wyrozniony, reszta } = podzielPodsumowanie(
+    TEKSTY_APLIKACJI.podsumowanieRozpoznania(filmow, pominietych),
+    TEKSTY_APLIKACJI.podsumowanieRozpoznania(filmow, 0),
   );
+  const pogrubienie = document.createElement('b');
+  pogrubienie.textContent = wyrozniony;
+  podsumowanie.replaceChildren(pogrubienie, reszta);
 }
 
 function odswiezPrzyciski(): void {
   przyciskRozpoznaj.disabled = trwaPobieranie;
-  przyciskPobierz.disabled = trwaPobieranie || doPobrania().length === 0;
+  przyciskPobierz.disabled = trwaPobieranie || doPobrania(wiersze).length === 0;
 }
 
 function rozpoznaj(): void {
   const pozycje = rozpoznajListe(pole.value);
   lista.replaceChildren();
   wiersze = pozycje.map(utworzWiersz);
-  const filmy = wiersze.filter((w) => w.pozycja.status === 'film');
+  const filmy = wiersze.filter((w) => w.film);
 
   podsumowanie.hidden = pozycje.length === 0;
-  const { wyrozniony, reszta } = podzielPodsumowanie(
-    TEKSTY_APLIKACJI.podsumowanieRozpoznania(filmy.length, pozycje.length - filmy.length),
-    TEKSTY_APLIKACJI.podsumowanieRozpoznania(filmy.length, 0),
-  );
-  const pogrubienie = document.createElement('b');
-  pogrubienie.textContent = wyrozniony;
-  podsumowanie.replaceChildren(pogrubienie, reszta);
+  odswiezPodsumowanie();
 
   odswiezPrzyciski();
-  void Promise.all(filmy.map(uzupelnijMetadane));
+  for (const wiersz of filmy) wiersz.metadane = uzupelnijMetadane(wiersz);
 }
 
 async function pobierzJeden(id: string): Promise<WynikPobrania> {
@@ -170,15 +195,19 @@ async function pobierzJeden(id: string): Promise<WynikPobrania> {
 const czekaj = (ms: number) => new Promise((rozwiaz) => setTimeout(rozwiaz, ms));
 
 // Po kolei, z przerwą, żeby nie zalać serwerów YouTube. Pobrane już pozycje są pomijane,
-// więc ponowne kliknięcie dociąga tylko te z błędem.
+// więc ponowne kliknięcie dociąga tylko te z błędem. Niedostępne Filmy nie trafiają do kolejki.
 async function pobierzWszystkie(): Promise<void> {
-  const kolejka = doPobrania();
+  const kolejka = doPobrania(wiersze);
   trwaPobieranie = true;
   odswiezPrzyciski();
   kolejka.forEach((w) => ustawStan(w, 'czeka', KOMUNIKATY.czeka));
 
-  for (const [numer, wiersz] of kolejka.entries()) {
-    if (numer > 0) await czekaj(PRZERWA_MIEDZY_POBRANIAMI_MS);
+  let pobranych = 0;
+  for (const wiersz of kolejka) {
+    // Kliknięcie mogło wyprzedzić odpowiedź oEmbed: czekamy na nią, niedostępnego Filmu nie pobieramy.
+    await wiersz.metadane;
+    if (wiersz.niedostepny) continue;
+    if (pobranych++ > 0) await czekaj(PRZERWA_MIEDZY_POBRANIAMI_MS);
     ustawStan(wiersz, 'pobieram', KOMUNIKATY.pobieram);
     const wynik = await pobierzJeden(wiersz.pozycja.id ?? '');
     if (wynik.status === 'gotowe') ustawStan(wiersz, 'gotowe', KOMUNIKATY.gotowe);

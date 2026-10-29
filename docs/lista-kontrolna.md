@@ -41,7 +41,7 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 ### 6. Pobieranie kilku Miniaturek
 
 - **Krok:** W Aplikacji wklej trzy linki: `https://youtu.be/dQw4w9WgXcQ`, `https://youtu.be/jNQXAC9IVRw`, `https://www.youtube.com/watch?v=aaaaaaaaaaa`. Kliknij „Rozpoznaj”, potem „Pobierz wszystkie”.
-- **Oczekiwany wynik:** Statusy zmieniają się po kolei: „Czeka” → „Pobieram…” → „Gotowe”. W Pobranych są `Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster) - Rick Astley.jpg` (1280×720) i `Me at the zoo - jawed.jpg` (480×360, stary Film bez wersji HD - to poprawne). Trzecia pozycja: „Film niedostępny (prywatny lub usunięty)”.
+- **Oczekiwany wynik:** Statusy zmieniają się po kolei: „Czeka” → „Pobieram…” → „Gotowe”. W Pobranych są `Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster) - Rick Astley.jpg` (1280×720) i `Me at the zoo - jawed.jpg` (480×360, stary Film bez wersji HD - to poprawne). Trzecia pozycja (nieistniejący Film) już po „Rozpoznaj” jest czerwona z napisem „Film niedostępny (usunięty)”, nie liczy się do „Filmów do pobrania: 2” i nie jest pobierana.
 
 ### 7. Drugie pobranie tego samego Filmu
 
@@ -160,3 +160,15 @@ Wzór: makieta `design/makieta/index.html` (https://claude.ai/artifact/HVrmYQpRd
 
 - **Krok:** Powtórz punkty 11, 12 i 17.
 - **Oczekiwany wynik:** Pod Filmem „Miniaturka” ma po obu stronach równe odstępy, jak „Udostępnij”. Na karcie przycisk jest półprzezroczysty (widać przez niego Miniaturkę), po najechaniu na sam przycisk ciemnieje; napis jest drobny, wielkości znaczka czasu trwania.
+
+## Niedostępne Filmy
+
+### 29. Niedostępny Film rozpoznany od razu
+
+- **Krok:** W Aplikacji wklej `https://youtu.be/dQw4w9WgXcQ`, `https://www.youtube.com/watch?v=aaaaaaaaaaa` i `https://www.youtube.com/watch?v=9bZkp7q5f_w` (dwa ostatnie to identyfikatory, których nie ma na YouTube). Kliknij „Rozpoznaj” i od razu, zanim wczytają się tytuły, „Pobierz wszystkie”.
+- **Oczekiwany wynik:** Przez chwilę „Filmów do pobrania: 3”, po wczytaniu tytułów „Filmów do pobrania: 1”. Oba nieistniejące Filmy mają czerwony wiersz z linkiem zamiast tytułu i jeden napis „Film niedostępny (usunięty)”; nie pokazują „Pobieram…”. Pobiera się tylko Rick Astley. Gdy wkleisz same nieistniejące linki, „Pobierz wszystkie” zostaje wyłączony.
+
+### 30. Brak internetu przy „Rozpoznaj” to nie niedostępny Film
+
+- **Krok:** Wyłącz Wi-Fi, wklej `https://youtu.be/dQw4w9WgXcQ` i kliknij „Rozpoznaj”. Włącz Wi-Fi i kliknij „Pobierz wszystkie”.
+- **Oczekiwany wynik:** Wiersz po „Rozpoznaj” zostaje „Czeka” (pod spodem „Brak połączenia - spróbuj ponownie”), liczy się do „Filmów do pobrania: 1”, a po włączeniu Wi-Fi pobiera się normalnie.
