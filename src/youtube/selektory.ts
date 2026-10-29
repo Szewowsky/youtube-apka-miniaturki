@@ -1,6 +1,6 @@
 // Wszystkie punkty zaczepienia na stronie YouTube w jednym miejscu.
 // Szczegóły, przykłady HTML i ocena stabilności: docs/selektory-youtube.md.
-export const ZWERYFIKOWANO = '2026-10-28';
+export const ZWERYFIKOWANO = '2026-10-29';
 
 export const SELEKTORY = {
   // Strona Filmu: rząd akcji pod Filmem i przycisk "Udostępnij" (wstawiamy za jego hostem).
@@ -19,6 +19,12 @@ export const SELEKTORY = {
   polkaShortow:
     'ytd-rich-shelf-renderer[is-shorts], grid-shelf-view-model, ytd-reel-shelf-renderer, ytd-rich-grid-renderer[is-shorts-grid]',
   linkShorta: 'a[href^="/shorts/"]',
+
+  // Podgląd wideo po najechaniu: osobna warstwa nad kartą, poza nią w DOM
+  // (ytd-app > #video-preview > ytd-video-preview-loader > div > ytd-video-preview).
+  // Aktywny ma klasę ytdVideoPreviewActive; link w środku niesie ID Filmu z karty.
+  podgladAktywny: 'ytd-video-preview.ytdVideoPreviewActive',
+  linkPodgladu: 'a[href*="watch?v="]',
 
   zdarzenieNawigacji: 'yt-navigate-finish',
 } as const;

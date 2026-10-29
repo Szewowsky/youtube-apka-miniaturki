@@ -1,6 +1,6 @@
 # Selektory DOM YouTube - weryfikacja na żywej stronie
 
-**Data weryfikacji:** 2026-10-28
+**Data weryfikacji:** 2026-10-28; podgląd wideo (sekcja 3.5) ponownie 2026-10-29.
 **Narzędzie:** ego-browser (Ego Lite, Chromium), `www.youtube.com`, interfejs PL, okno ok. 2200 px szerokości.
 **Kontekst sesji:** profil przeglądarki był **zalogowany** (YouTube Premium) i miał zainstalowane inne wtyczki (vidIQ, LanguageTool). Konto ma ustawiony **motyw ciemny**. Niczego na koncie nie zmieniano; jasny motyw był symulowany lokalnie (opis w sekcji 1.4).
 
@@ -15,7 +15,7 @@ Dotyczy issue #7 (T6, przycisk pod Filmem) i #8 (T7, przycisk na listach).
 3. **Trusted Types są wymuszone:** `element.innerHTML = "..."` rzuca `TypeError: This document requires 'TrustedHTML' assignment`. Przycisk i ikonę budujemy przez `createElement` / `createElementNS` + `textContent`.
 4. **`yt-navigate-finish` działa**, ale w chwili zdarzenia `ytd-watch-flexy[video-id]` ma jeszcze **stare** ID. Bieżące ID bierz z `location.href` (`v=`) albo z `event.detail.endpoint.watchEndpoint.videoId`.
 5. **`#top-level-buttons-computed` jest przebudowywany po nawigacji SPA** - wstawiony tam element znika. Trzeba go wstawiać ponownie (po `yt-navigate-finish` + `MutationObserver`).
-6. **Na listach podgląd wideo po najechaniu (inline preview) zakrywa Miniaturkę** po ok. 1-2 s, a jego przyciski (wycisz, napisy) zajmują **prawy górny róg**. Przycisk z `position:absolute; z-index` wysokim w **lewym górnym rogu** pozostaje widoczny i klikalny nad podglądem (sprawdzone `elementFromPoint`).
+6. **Na listach podgląd wideo po najechaniu (inline preview) zakrywa Miniaturkę** po ok. 1-2 s, a jego przyciski (wycisz, napisy) zajmują **prawy górny róg**. Przycisk z `position:absolute; z-index` wysokim w **lewym górnym rogu** pozostaje widoczny i klikalny nad podglądem (sprawdzone `elementFromPoint`). Podgląd zabiera karcie `:hover`, więc widocznością przycisku steruje skrypt, nie samo CSS (sekcja 3.5, pomiar 2026-10-29).
 7. Wyszukiwarka nadal używa **starego** `ytd-video-renderer` + `ytd-thumbnail a#thumbnail`; strona główna i kanał - **nowego** `ytd-rich-item-renderer > yt-lockup-view-model`. Moduł musi obsłużyć oba układy.
 
 ---
@@ -254,6 +254,18 @@ Po ok. 1-2 s najechania na Miniaturkę (strona główna **i** wyszukiwarka) YouT
 
 Test: przycisk wstawiony do `yt-thumbnail-view-model` z `position:absolute; top:8px; left:8px; z-index:9999` **pozostał widoczny i był trafiany przez `elementFromPoint`** podczas aktywnego podglądu (`#video-preview` ma `z-index: auto`, `position: static`). Zrzut `05-…`.
 
+**Pomiar 2026-10-29 (Błąd 1, ticket #29).** Na koncie Roberta podgląd startuje po mniej niż 0,3 s. Szczegóły:
+
+- Ścieżka: `ytd-app > div#video-preview > ytd-video-preview-loader > div > ytd-video-preview` (z `div#inline-preview-player` w środku).
+- Klasy `ytd-video-preview`: aktywny `ytdVideoPreviewHost ytdVideoPreviewActive` (gra: dodatkowo `ytdVideoPreviewPlaying`); nieaktywny `ytdVideoPreviewHidePlayerControls`, prostokąt 0×0.
+- Rozmiar: ok. 12 px większy od Miniaturki z każdej strony (Miniaturka 387×218 → podgląd 411×242).
+- W środku jest link `a[href*="watch?v="]` z tym samym ID Filmu co karta.
+- Gdy podgląd się pojawia, karta dostaje `mouseleave` i traci `:hover`, choć kursor się nie ruszył. Dlatego reguła CSS `karta:hover .mty-przycisk-karta` nie wystarcza: przycisk znikał (Błąd 1).
+- `document.elementsFromPoint` pod grającym podglądem nadal zwraca elementy karty (głębiej w stosie, np. 9. pozycja), a `elementFromPoint` - tylko `video` podglądu.
+- Wyszukiwarka (`ytd-video-renderer`) ma ten sam `ytd-video-preview`.
+
+Rozwiązanie w kodzie: widocznością steruje skrypt (`src/youtube/content.ts`, klasa `.mty-wskazany`). Karta jest wskazana, gdy w `elementsFromPoint` pod kursorem jest jej element, albo gdy kursor jest nad aktywnym podglądem (`SELEKTORY.podgladAktywny`), którego link ma ID tej karty. Klasa schodzi dopiero po wyjściu z karty i z jej podglądu.
+
 Wniosek: **przycisk w lewym górnym rogu Miniaturki** (prawy górny zajmują kontrolki podglądu, prawy dolny - czas trwania, dół - pasek postępu). Wysoki `z-index`. Ponieważ przycisk jest wewnątrz `<a>`, handler kliknięcia musi robić `preventDefault()` + `stopPropagation()` (inaczej otworzy się Film). Wariant bezpieczniejszy: wstawić przycisk do `div.ytLockupViewModelHost` (rodzic linku) z pozycjonowaniem względem Miniaturki - ale ten div nie ma `position: relative`, więc wymaga własnego stylu; do przetestowania przy implementacji.
 
 ---
@@ -321,6 +333,10 @@ export const selektory = {
   polkaShortow: 'ytd-rich-shelf-renderer[is-shorts], grid-shelf-view-model, ytd-reel-shelf-renderer, ytd-rich-grid-renderer[is-shorts-grid]',
   kartaShorta: 'ytm-shorts-lockup-view-model-v2, ytm-shorts-lockup-view-model, ytd-reel-item-renderer',
   linkShorta: 'a[href^="/shorts/"]',
+
+  // --- Podgląd wideo po najechaniu (zweryfikowano 2026-10-29) ---
+  podgladAktywny: 'ytd-video-preview.ytdVideoPreviewActive', // warstwa poza kartą, patrz 3.5
+  linkPodgladu: 'a[href*="watch?v="]',                       // w podglądzie; ID = ID karty
 } as const;
 ```
 
@@ -328,7 +344,7 @@ Reguły użycia:
 - Karta jest Filmem, gdy: pasuje do `kartaFilmu`, **ma** `linkMiniaturki` z `/watch?v=`, **nie** leży w `polkaShortow` (`closest(...)`) i **nie** zawiera `linkShorta`.
 - ID z karty: `new URL(link.href).searchParams.get('v')` (href ma doklejone `&pp=…`, `&t=…s`). Klasa `content-id-<ID>` na `div.ytLockupViewModelHost` to dodatkowe, niezależne źródło do kontroli.
 - Strona Shorta: `location.pathname.startsWith('/shorts/')` → nic nie dodajemy.
-- Przycisk na liście: lewy górny róg `kontenerMiniaturki`, `position:absolute; top:8px; left:8px; z-index` wysoki; widoczny tylko na `:hover` karty; `preventDefault()` + `stopPropagation()` w kliknięciu.
+- Przycisk na liście: lewy górny róg `kontenerMiniaturki`, `position:absolute; top:8px; left:8px; z-index` wysoki; widoczny, gdy kursor jest nad kartą albo nad jej podglądem (klasa `.mty-wskazany` ze skryptu, nie sam `:hover` - patrz 3.5); `preventDefault()` + `stopPropagation()` w kliknięciu.
 - Budowa DOM bez `innerHTML` (Trusted Types): `createElement`, `createElementNS('http://www.w3.org/2000/svg', …)`, `textContent`.
 - Style kolorów na sztywno, przełączane `html[dark]` (zmienne `--yt-spec-*` są puste).
 
