@@ -1,20 +1,37 @@
+/* Wygląd według design/wytyczne.md (kierunek E: Okładka w barwach YouTube). */
+
 :root {
-  --tlo: #f9f9f9;
+  --tlo: #ffffff;
   --karta: #ffffff;
   --tekst: #0f0f0f;
-  --tekst-pomocniczy: #606060;
-  --ramka: #d9d9d9;
-  --akcent: #e62117;
-  color-scheme: light dark;
+  --tekst-pomocniczy: #5b5b5b;
+  --obrys: #0f0f0f;            /* obrysy 2 px: pole, przyciski, wiersze, przełącznik */
+  --obrys-miekki: #e2e2e2;     /* przycisk wyłączony, wiersz pominięty */
+  --akcent: #ff0033;           /* tylko wypełnienia: przycisk główny, aktywna Jakość, marker */
+  --na-akcencie: #ffffff;
+  --gotowe: #127a3a;
+  --blad: #cc0000;             /* tylko obrys, tło wiersza, ikona i napis błędu */
+  --blad-tlo: #fdecec;
+  --pominiety: #6b6b6b;
+  --tor: #f1f1f1;              /* tło paska postępu, łuk „pobieram” */
+  --fokus: #ff0033;
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --tlo: #0f0f0f;
-    --karta: #212121;
-    --tekst: #f1f1f1;
-    --tekst-pomocniczy: #aaaaaa;
-    --ramka: #3f3f3f;
+    --karta: #1b1b1b;
+    --tekst: #ffffff;
+    --tekst-pomocniczy: #b4b4b4;
+    --obrys: #ffffff;
+    --obrys-miekki: #3a3a3a;
+    --gotowe: #4ade80;
+    --blad: #ff6b6b;
+    --blad-tlo: #2a1414;
+    --pominiety: #9a9a9a;
+    --tor: #262626;
+    color-scheme: dark;
   }
 }
 
@@ -26,7 +43,7 @@ body {
   margin: 0;
   background: var(--tlo);
   color: var(--tekst);
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font: 14px/1.45 Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .aplikacja {
@@ -35,62 +52,161 @@ body {
   padding: 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 h1 {
   margin: 0;
-  font-size: 28px;
+  font-family: Anton, Impact, 'Arial Narrow', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
-.opis,
-.etykieta {
+h1 mark {
+  padding: 0 6px;
+  background: var(--akcent);
+  color: var(--na-akcencie);
+}
+
+.opis {
   margin: 0;
+  font-size: 13px;
   color: var(--tekst-pomocniczy);
+}
+
+.grupa {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.etykieta {
+  padding: 0;
+  font-size: 12.5px;
+  font-weight: 600;
 }
 
 textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid var(--ramka);
-  border-radius: 12px;
+  min-height: 84px;
+  padding: 10px 12px;
+  border: 2px solid var(--obrys);
+  border-radius: 10px;
   background: var(--karta);
   color: var(--tekst);
-  font: 14px/1.5 ui-monospace, Menlo, monospace;
+  font: 12px/1.65 'Roboto Mono', ui-monospace, Menlo, monospace;
   resize: vertical;
 }
 
-button {
-  align-self: flex-start;
-  padding: 10px 20px;
-  border: 0;
-  border-radius: 18px;
-  background: var(--akcent);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+:is(textarea, button, .przelacznik input):focus {
+  outline: none;
 }
 
-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+:is(textarea, button):focus-visible,
+.przelacznik input:focus-visible + span {
+  outline: 2px solid var(--fokus);
+  outline-offset: 2px;
+}
+
+.rzad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .akcje {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+}
+
+button {
+  padding: 7px 14px;
+  border: 2px solid var(--obrys);
+  border-radius: 10px;
+  background: var(--akcent);
+  color: var(--na-akcencie);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 button.drugorzedny {
   background: transparent;
   color: var(--tekst);
-  border: 1px solid var(--ramka);
 }
 
+button:disabled {
+  background: transparent;
+  color: var(--tekst-pomocniczy);
+  border-color: var(--obrys-miekki);
+  cursor: not-allowed;
+}
+
+.jakosc {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.przelacznik {
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  gap: 2px;
+  padding: 3px;
+  border: 2px solid var(--obrys);
+  border-radius: 10px;
+  background: transparent;
+}
+
+.przelacznik input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.przelacznik span {
+  display: block;
+  padding: 5px 11px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--tekst-pomocniczy);
+  cursor: pointer;
+}
+
+.przelacznik input:checked + span {
+  background: var(--akcent);
+  color: var(--na-akcencie);
+  font-weight: 600;
+}
+
+.podsumowanie {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--tekst-pomocniczy);
+}
+
+.podsumowanie b {
+  font-weight: 600;
+  color: var(--tekst);
+}
+
+/* Lista Filmów: ikona stanu, tytuł z kanałem, stan. */
 .lista {
   list-style: none;
-  margin: 8px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -98,14 +214,19 @@ button.drugorzedny {
 }
 
 .pozycja {
-  display: flex;
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px 14px;
-  border: 1px solid var(--ramka);
-  border-radius: 12px;
+  gap: 12px;
+  padding: 9px 12px;
+  border: 2px solid var(--obrys);
+  border-radius: 10px;
   background: var(--karta);
+  min-width: 0;
+}
+
+.pozycja-znak svg {
+  display: block;
 }
 
 .pozycja-opis {
@@ -125,76 +246,115 @@ button.drugorzedny {
   font-weight: 600;
 }
 
-.pozycja-kanal {
-  font-size: 13px;
+.pozycja-tytul.wczytuje {
+  font-style: italic;
+  font-weight: 400;
   color: var(--tekst-pomocniczy);
+}
+
+.pozycja-kanal {
+  font-size: 12px;
+  color: var(--tekst-pomocniczy);
+}
+
+.pozycja-stan {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
 }
 
 .pozycja-status {
-  flex-shrink: 0;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
   color: var(--tekst-pomocniczy);
-}
-
-.pozycja[data-status='pominiety'] {
-  opacity: 0.65;
 }
 
 .pozycja[data-status='pobieram'] .pozycja-status {
-  color: var(--tekst);
   font-weight: 600;
+  color: var(--tekst);
 }
 
 .pozycja[data-status='gotowe'] .pozycja-status {
-  color: #1e8e3e;
   font-weight: 600;
+  color: var(--gotowe);
+}
+
+.pozycja[data-status='blad'] {
+  border-color: var(--blad);
+  background: var(--blad-tlo);
 }
 
 .pozycja[data-status='blad'] .pozycja-status {
-  color: var(--akcent);
   font-weight: 600;
+  color: var(--blad);
 }
 
-.jakosc {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.pozycja[data-status='pominiety'] {
+  border-color: var(--obrys-miekki);
+  border-style: dashed;
 }
 
-.przelacznik {
-  display: inline-flex;
-  align-self: flex-start;
-  padding: 3px;
-  border: 1px solid var(--ramka);
-  border-radius: 18px;
-  background: var(--karta);
-}
-
-.przelacznik input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.przelacznik span {
-  display: block;
-  padding: 7px 14px;
-  border-radius: 15px;
-  font-size: 13px;
-  cursor: pointer;
+.pozycja[data-status='pominiety'] .pozycja-tytul {
+  font: 500 12px/1.45 'Roboto Mono', ui-monospace, Menlo, monospace;
   color: var(--tekst-pomocniczy);
 }
 
-.przelacznik input:checked + span {
-  background: var(--tekst);
-  color: var(--tlo);
-  font-weight: 600;
+/* Pasek postępu jest umowny: nie znamy procentów pobrania. */
+.pasek-postepu {
+  display: none;
+  width: 72px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--tor);
+  overflow: hidden;
 }
 
-.przelacznik input:focus-visible + span {
-  outline: 2px solid var(--akcent);
-  outline-offset: 1px;
+.pasek-postepu i {
+  display: block;
+  width: 58%;
+  height: 100%;
+  background: var(--tekst);
+}
+
+.pozycja[data-status='pobieram'] .pasek-postepu {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .obrot {
+    transform-origin: 50% 50%;
+    animation: obrot 0.9s linear infinite;
+  }
+
+  .pasek-postepu i {
+    animation: postep 2.4s ease-in-out infinite alternate;
+  }
+
+  @keyframes obrot {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes postep {
+    from {
+      width: 30%;
+    }
+    to {
+      width: 84%;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .pozycja {
+    grid-template-columns: 22px 1fr;
+  }
+
+  .pozycja-stan {
+    grid-column: 2;
+    align-items: flex-start;
+  }
 }

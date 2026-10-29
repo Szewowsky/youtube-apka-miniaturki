@@ -5,27 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Miniaturki YouTube</title>
     <link rel="icon" href="../../ikony/ikona-32.png" />
+    <link rel="stylesheet" href="./fonty.css" />
     <link rel="stylesheet" href="./aplikacja.css" />
   </head>
   <body>
     <main class="aplikacja">
       <h1 id="naglowek"></h1>
       <p id="opis" class="opis"></p>
-      <label for="linki" id="etykieta-linkow" class="etykieta"></label>
-      <textarea id="linki" rows="10" spellcheck="false"></textarea>
-      <fieldset class="jakosc">
-        <legend id="etykieta-jakosci" class="etykieta"></legend>
-        <div class="przelacznik" id="przelacznik-jakosci">
-          <label><input type="radio" name="jakosc" value="max" /><span></span></label>
-          <label><input type="radio" name="jakosc" value="sd" /><span></span></label>
-          <label><input type="radio" name="jakosc" value="hq" /><span></span></label>
-        </div>
-      </fieldset>
-      <div class="akcje">
-        <button id="rozpoznaj" type="button" class="drugorzedny"></button>
-        <button id="pobierz-wszystkie" type="button" disabled></button>
+      <div class="grupa">
+        <label for="linki" id="etykieta-linkow" class="etykieta"></label>
+        <textarea id="linki" rows="10" spellcheck="false"></textarea>
       </div>
-      <p id="podsumowanie" class="opis" hidden></p>
+      <div class="rzad">
+        <fieldset class="jakosc grupa">
+          <legend id="etykieta-jakosci" class="etykieta"></legend>
+          <div class="przelacznik" id="przelacznik-jakosci">
+            <label><input type="radio" name="jakosc" value="max" /><span></span></label>
+            <label><input type="radio" name="jakosc" value="sd" /><span></span></label>
+            <label><input type="radio" name="jakosc" value="hq" /><span></span></label>
+          </div>
+        </fieldset>
+        <div class="akcje">
+          <button id="rozpoznaj" type="button" class="drugorzedny"></button>
+          <button id="pobierz-wszystkie" type="button" disabled></button>
+        </div>
+      </div>
+      <p id="podsumowanie" class="podsumowanie" hidden></p>
       <ol id="lista" class="lista"></ol>
     </main>
     <script type="module" src="./aplikacja.ts"></script>

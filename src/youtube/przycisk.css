@@ -29,7 +29,7 @@
 /* Pod Filmem: kopia sąsiednich przycisków YouTube (40 px, zaokrąglenie 20 px). */
 .mty-przycisk-film {
   height: 40px;
-  padding: 0 16px 0 12px;
+  padding: 0 16px;
   margin-left: 8px;
   border-radius: 20px;
   font-size: 14px;
@@ -81,10 +81,10 @@ html[dark] .mty-przycisk[data-stan='blad'] {
   height: 32px;
   padding: 0 10px 0 6px;
   border-radius: 16px;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 32px;
   max-width: calc(100% - 16px);
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
   /* Ukryty, ale nadal łapie kursor: podgląd wideo YouTube leży poza kartą i zabiera jej :hover. */
   opacity: 0;
@@ -110,7 +110,7 @@ ytd-video-renderer:hover .mty-przycisk-karta,
 }
 
 .mty-przycisk-karta[data-stan='zwykly']:hover {
-  background: #000;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 /* Kursor nad przyciskiem na karcie: chowamy podgląd wideo YouTube, który go przykrywa. */
