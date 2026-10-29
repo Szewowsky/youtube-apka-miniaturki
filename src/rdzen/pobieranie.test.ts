@@ -102,7 +102,7 @@ describe('pobierzMiniaturke', () => {
   it('błąd oEmbed (401) przy istniejącej Miniaturce → plik ID.jpg i status gotowe', async () => {
     const deps = przygotuj({
       statusy: { [MAX]: 200 },
-      metadane: async () => ({ ok: false, komunikat: KOMUNIKATY.filmPrywatny }),
+      metadane: async () => ({ ok: false, powod: 'niepewny', komunikat: KOMUNIKATY.filmPrywatny }),
     });
     const wynik = await pobierzMiniaturke(ID, 'max', deps);
     expect(wynik).toEqual({ status: 'gotowe', nazwa: `${ID}.jpg` });

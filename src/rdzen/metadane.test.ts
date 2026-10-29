@@ -47,34 +47,38 @@ describe('pobierzMetadane', () => {
     });
   });
 
-  it('przy 401 zgłasza Film prywatny', async () => {
+  it('przy 401 zgłasza Film prywatny jako niepewny (może mieć tylko wyłączone osadzanie)', async () => {
     const { fetch } = falszywyFetch(() => new Response('Unauthorized', { status: 401 }));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.filmPrywatny,
     });
   });
 
-  it('przy 403 zgłasza Film prywatny', async () => {
+  it('przy 403 zgłasza Film prywatny jako niepewny', async () => {
     const { fetch } = falszywyFetch(() => new Response('Forbidden', { status: 403 }));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.filmPrywatny,
     });
   });
 
-  it('przy 400 (nieistniejący identyfikator) zgłasza Film usunięty', async () => {
+  it('przy 400 (nieistniejący identyfikator) zgłasza Film usunięty jako niedostępny', async () => {
     const { fetch } = falszywyFetch(() => new Response('Bad Request', { status: 400 }));
     expect(await pobierzMetadane('aaaaaaaaaaa', { fetch })).toEqual({
       ok: false,
+      powod: 'niedostepny',
       komunikat: KOMUNIKATY.filmUsuniety,
     });
   });
 
-  it('przy 404 zgłasza Film usunięty', async () => {
+  it('przy 404 zgłasza Film usunięty jako niedostępny', async () => {
     const { fetch } = falszywyFetch(() => new Response('Not Found', { status: 404 }));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niedostepny',
       komunikat: KOMUNIKATY.filmUsuniety,
     });
   });
@@ -83,6 +87,7 @@ describe('pobierzMetadane', () => {
     const { fetch } = falszywyFetch(() => new Response('Error', { status: 500 }));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.brakPolaczenia,
     });
   });
@@ -93,6 +98,7 @@ describe('pobierzMetadane', () => {
     });
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.brakPolaczenia,
     });
   });
@@ -101,6 +107,7 @@ describe('pobierzMetadane', () => {
     const { fetch } = falszywyFetch(() => new Response('<html>nie json', { status: 200 }));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.brakPolaczenia,
     });
   });
@@ -109,6 +116,7 @@ describe('pobierzMetadane', () => {
     const { fetch } = falszywyFetch(() => odpowiedzJson({ title: 'Tytuł' }));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.brakPolaczenia,
     });
   });
@@ -117,6 +125,7 @@ describe('pobierzMetadane', () => {
     const { fetch } = falszywyFetch(() => odpowiedzJson({ title: '   ', author_name: 'Kanał' }));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.brakPolaczenia,
     });
   });
@@ -125,6 +134,7 @@ describe('pobierzMetadane', () => {
     const { fetch } = falszywyFetch(() => odpowiedzJson(null));
     expect(await pobierzMetadane(ID, { fetch })).toEqual({
       ok: false,
+      powod: 'niepewny',
       komunikat: KOMUNIKATY.brakPolaczenia,
     });
   });
