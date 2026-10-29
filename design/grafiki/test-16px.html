@@ -1,0 +1,55 @@
+<title>Test Ikony Wtyczki</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Układ: jedna kolumna kandydatów; w każdym wierszu ikona w 128/48/32/16 px oraz 16 i 32 px na jasnym i ciemnym pasku przeglądarki. */
+:root { --bg: #f3f3f3; --surface: #ffffff; --fg: #0f0f0f; --muted: #5b5b5b; --line: #d6d6d6; --accent: #ff0033;
+  --font: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif; --mono: ui-monospace, Menlo, monospace; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #181818; --surface: #202020; --fg: #f1f1f1; --muted: #a8a8a8; --line: #333; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #181818; --surface: #202020; --fg: #f1f1f1; --muted: #a8a8a8; --line: #333; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 14px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.strona { max-width: 1100px; margin: 0 auto; padding-block: 32px 64px; display: flex; flex-direction: column; gap: 20px; }
+h1 { margin: 0; font-size: 26px; text-wrap: balance; }
+p { margin: 0; color: var(--muted); max-width: 70ch; }
+.etykieta { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.kandydat { display: grid; grid-template-columns: 160px 1fr; gap: 16px; align-items: center; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.kandydat.wektor { border-color: var(--accent); border-width: 2px; }
+.nazwa { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nazwa b { font-size: 14px; }
+.rozmiary { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+.rozmiary img { display: block; flex: none; }
+.pasek { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 8px; }
+.pasek.jasny { background: #f1f3f4; }
+.pasek.ciemny { background: #35363a; }
+.pasek .adres { width: 70px; height: 20px; border-radius: 10px; }
+.pasek.jasny .adres { background: #fff; }
+.pasek.ciemny .adres { background: #202124; }
+@media (max-width: 640px) { .kandydat { grid-template-columns: 1fr; } }
+</style>
+<main class="strona">
+  <span class="etykieta">Miniaturki YouTube · D6 (#16)</span>
+  <h1>Test Ikony Wtyczki w 16 px</h1>
+  <p>Każdy kandydat w 128, 48, 32 i 16 px oraz na jasnym i ciemnym pasku przeglądarki (16 px to zwykły ekran, 32 px to ekran Retina). Czerwona ramka: wersja wektorowa z makiety.</p>
+  <div id="lista"></div>
+</main>
+<script>
+(function () {
+  var k = [
+    ['wektor.svg', 'Wektor z makiety', 'D5, kierunek E', true],
+    ['wektor-v2.svg', 'Wektor v2', 'makieta + pełna strzałka z Higgsfield', true],
+    ['higgsfield/recraft-1.svg', 'Recraft 1', 'Recraft V4.1 vector'], ['higgsfield/recraft-2.svg', 'Recraft 2', 'Recraft V4.1 vector'],
+    ['higgsfield/recraft-3.svg', 'Recraft 3', 'Recraft V4.1 vector'], ['higgsfield/recraft-4.svg', 'Recraft 4', 'Recraft V4.1 vector'],
+    ['higgsfield/gpt-1.png', 'GPT 1', 'GPT Image 2.5'], ['higgsfield/gpt-2.png', 'GPT 2', 'GPT Image 2.5'],
+    ['higgsfield/gpt-3.png', 'GPT 3', 'GPT Image 2.5'], ['higgsfield/gpt-4.png', 'GPT 4', 'GPT Image 2.5']
+  ];
+  var html = k.map(function (c) {
+    var img = function (s) { return '<img src="' + c[0] + '" width="' + s + '" height="' + s + '" alt="' + c[1] + ' ' + s + ' px">'; };
+    return '<div class="kandydat' + (c[3] ? ' wektor' : '') + '"><div class="nazwa"><b>' + c[1] + '</b><span class="etykieta">' + c[2] + '</span></div>' +
+      '<div class="rozmiary">' + img(128) + img(48) + img(32) + img(16) +
+      '<span class="pasek jasny"><span class="adres"></span>' + img(16) + img(32) + '</span>' +
+      '<span class="pasek ciemny"><span class="adres"></span>' + img(16) + img(32) + '</span></div></div>';
+  }).join('');
+  document.getElementById('lista').innerHTML = html;
+})();
+</script>

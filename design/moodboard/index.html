@@ -1,0 +1,431 @@
+<title>Moodboard Miniaturek</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@75..100,400..800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap">
+<style>
+/* Układ: strona-tablica, na górze pas inspiracji, niżej trzy kierunki jeden pod drugim; w każdym próbka Aplikacji w jasnym i ciemnym motywie obok siebie. */
+:root {
+  --bg: #f4f4f2;
+  --surface: #ffffff;
+  --fg: #17171a;
+  --muted: #5d5d66;
+  --line: #dcdcd8;
+  --pick: #c4302b;
+  --font-ui: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131315; --surface: #1d1d20; --fg: #ececee; --muted: #a2a2ab; --line: #34343a; --pick: #ff6b5e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131315; --surface: #1d1d20; --fg: #ececee; --muted: #a2a2ab; --line: #34343a; --pick: #ff6b5e;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.strona { max-width: 1180px; margin: 0 auto; padding-block: 40px 64px; display: flex; flex-direction: column; gap: 56px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 700; }
+.etykieta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.wstep { display: flex; flex-direction: column; gap: 12px; max-width: 68ch; }
+.wstep p { margin: 0; color: var(--muted); }
+.sekcja { display: flex; flex-direction: column; gap: 20px; }
+.sekcja > header { display: flex; flex-direction: column; gap: 6px; max-width: 68ch; }
+.sekcja > header p { margin: 0; color: var(--muted); }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
+
+/* Inspiracje */
+.inspiracje { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.insp { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.insp a.obraz { display: block; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.insp img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.insp p { margin: 0; font-size: 13px; line-height: 1.45; }
+.insp .gdzie { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+
+/* Kierunek */
+.kierunek { display: flex; flex-direction: column; gap: 20px; padding-block: 28px; border-top: 1px solid var(--line); }
+.kier-naglowek { display: grid; grid-template-columns: auto 1fr; gap: 16px 20px; align-items: start; }
+.kier-litera { font-family: var(--font-mono); font-size: 13px; font-weight: 500; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--fg); }
+.kier-opis { display: flex; flex-direction: column; gap: 8px; min-width: 0; max-width: 72ch; }
+.kier-opis p { margin: 0; color: var(--muted); }
+.fakty { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; }
+.fakty b { font-weight: 600; }
+.paleta { display: flex; flex-wrap: wrap; gap: 20px; }
+.paleta-grupa { display: flex; flex-direction: column; gap: 6px; }
+.probki { display: flex; gap: 6px; }
+.probka { width: 44px; height: 44px; border-radius: 6px; border: 1px solid var(--line); }
+.podglady { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 860px) { .podglady { grid-template-columns: 1fr; } }
+.ikony { display: flex; flex-wrap: wrap; gap: 16px; }
+.pasek { display: flex; align-items: center; gap: 14px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); }
+.pasek.jasny { background: #f1f3f4; }
+.pasek.ciemny { background: #35363a; }
+.pasek .adres { width: 120px; height: 22px; border-radius: 11px; }
+.pasek.jasny .adres { background: #ffffff; }
+.pasek.ciemny .adres { background: #202124; }
+.pasek svg { display: block; flex: none; }
+.pasek .podpis { font-family: var(--font-mono); font-size: 11px; }
+.pasek.jasny .podpis { color: #5f6368; }
+.pasek.ciemny .podpis { color: #bdc1c6; }
+
+/* Wybór */
+.wybor { padding: 24px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; max-width: 72ch; }
+.wybor p { margin: 0; }
+.wybor .muted { color: var(--muted); }
+code { font-family: var(--font-mono); font-size: 0.92em; }
+
+/* ---------- Próbka Aplikacji: wspólny szkielet, kolory i fonty z tokenów kierunku ---------- */
+.app {
+  --a-bg: #fff; --a-card: #fff; --a-fg: #000; --a-muted: #555; --a-line: #ddd; --a-accent: #c00; --a-on-accent: #fff;
+  --a-ok: #188038; --a-err: #c5221f; --a-skip: #777; --a-track: #eee; --a-radius: 12px; --a-radius-s: 8px;
+  --a-display: var(--font-ui); --a-body: var(--font-ui); --a-mono: var(--font-mono); --a-h1-size: 22px; --a-h1-weight: 700; --a-h1-case: none; --a-h1-track: 0;
+  background: var(--a-bg); color: var(--a-fg); font-family: var(--a-body);
+  border-radius: 14px; border: 1px solid var(--line); padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0;
+  font-size: 14px; line-height: 1.45;
+}
+.app .motyw { font-family: var(--a-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--a-muted); }
+.app h3 { font-family: var(--a-display); font-size: var(--a-h1-size); font-weight: var(--a-h1-weight); text-transform: var(--a-h1-case); letter-spacing: var(--a-h1-track); line-height: 1.1; }
+.app .pod { margin: 0; color: var(--a-muted); font-size: 13px; }
+.app .pole { border: 1px solid var(--a-line); border-radius: var(--a-radius-s); background: var(--a-card); padding: 10px 12px; font-family: var(--a-mono); font-size: 12px; line-height: 1.6; color: var(--a-muted); overflow-x: auto; white-space: pre; }
+.app .rzad { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.app .segment { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--a-track); gap: 2px; }
+.app .segment span { padding: 5px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--a-muted); white-space: nowrap; }
+.app .segment span.aktywny { background: var(--a-card); color: var(--a-fg); box-shadow: 0 1px 2px rgba(0,0,0,.14); }
+.app .przyciski { display: flex; gap: 8px; }
+.app .btn { border-radius: 999px; padding: 8px 16px; font-family: var(--a-body); font-size: 13px; font-weight: 600; border: 1px solid transparent; white-space: nowrap; }
+.app .btn.glowny { background: var(--a-accent); color: var(--a-on-accent); }
+.app .btn.drugi { background: transparent; color: var(--a-fg); border-color: var(--a-line); }
+.app .lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.app .poz { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 9px 12px; border: 1px solid var(--a-line); border-radius: var(--a-radius); background: var(--a-card); min-width: 0; }
+.app .poz .txt { min-width: 0; display: flex; flex-direction: column; }
+.app .poz .tytul { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app .poz .kanal { font-size: 12px; color: var(--a-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app .stan { font-size: 12px; font-weight: 600; white-space: nowrap; text-align: right; }
+.app .stan.ok { color: var(--a-ok); }
+.app .stan.err { color: var(--a-err); }
+.app .stan.skip { color: var(--a-skip); font-weight: 500; }
+.app .stan.czeka { color: var(--a-muted); font-weight: 500; }
+.app .stan.trwa { color: var(--a-fg); }
+.app .znak { width: 22px; height: 22px; display: grid; place-items: center; }
+.app .znak svg { display: block; }
+.app .uwaga { font-size: 11.5px; color: var(--a-muted); }
+.app .stan-kol { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 0; }
+.app .pasek-post { width: 64px; height: 4px; border-radius: 2px; background: var(--a-track); overflow: hidden; }
+.app .pasek-post i { display: block; width: 58%; height: 100%; background: var(--a-accent); }
+@media (max-width: 520px) {
+  .app .poz { grid-template-columns: auto 1fr; }
+  .app .stan-kol { grid-column: 2; align-items: flex-start; }
+  .app .stan { text-align: left; }
+}
+
+/* ---------- A: Studio ---------- */
+.k-a { --a-display: "Roboto", system-ui, sans-serif; --a-body: "Roboto", system-ui, sans-serif; --a-mono: "Roboto Mono", ui-monospace, monospace; --a-h1-size: 22px; --a-h1-weight: 700; --a-radius: 12px; --a-radius-s: 8px; }
+.k-a.jasny { --a-bg: #f9f9f9; --a-card: #ffffff; --a-fg: #0f0f0f; --a-muted: #606060; --a-line: #e5e5e5; --a-accent: #ff0033; --a-on-accent: #ffffff; --a-ok: #188038; --a-err: #cc0000; --a-skip: #7a7a7a; --a-track: #f0f0f0; }
+.k-a.ciemny { --a-bg: #0f0f0f; --a-card: #212121; --a-fg: #f1f1f1; --a-muted: #aaaaaa; --a-line: #303030; --a-accent: #ff0033; --a-on-accent: #ffffff; --a-ok: #4fc36b; --a-err: #ff6b6b; --a-skip: #8e8e8e; --a-track: #2b2b2b; }
+.k-a.ciemny .segment span.aktywny { background: #3f3f3f; }
+
+/* ---------- B: Stykówka ---------- */
+.k-b { --a-display: "Archivo", "Arial Narrow", sans-serif; --a-body: "Archivo", system-ui, sans-serif; --a-mono: "IBM Plex Mono", ui-monospace, monospace; --a-h1-size: 26px; --a-h1-weight: 800; --a-h1-case: uppercase; --a-h1-track: 0.01em; --a-radius: 4px; --a-radius-s: 4px; }
+.k-b h3 { font-stretch: 75%; }
+.k-b.jasny { --a-bg: #ecebe6; --a-card: #f8f7f3; --a-fg: #1e1d1a; --a-muted: #6a675f; --a-line: #cfccc2; --a-accent: #d9480f; --a-on-accent: #fffaf5; --a-ok: #2f7a3a; --a-err: #b42318; --a-skip: #85817a; --a-track: #dedbd2; }
+.k-b.ciemny { --a-bg: #181715; --a-card: #23221f; --a-fg: #ebe8e1; --a-muted: #a29e94; --a-line: #3a3833; --a-accent: #ff6a2b; --a-on-accent: #1a0d05; --a-ok: #7bc47f; --a-err: #ff7a6b; --a-skip: #8d897f; --a-track: #302e2a; }
+.k-b .btn, .k-b .segment, .k-b .segment span { border-radius: 4px; }
+.k-b .poz { position: relative; padding-left: 26px; }
+.k-b .poz::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 7px; background: repeating-linear-gradient(to bottom, var(--a-line) 0 5px, transparent 5px 10px); border-radius: 1px; }
+.k-b .nr { font-family: var(--a-mono); font-size: 11px; color: var(--a-muted); }
+.k-b.ciemny .segment span.aktywny { background: #3a3833; }
+
+/* ---------- C: Okładka ---------- */
+.k-c { --a-display: "Anton", Impact, "Arial Narrow", sans-serif; --a-body: "Figtree", system-ui, sans-serif; --a-mono: "IBM Plex Mono", ui-monospace, monospace; --a-h1-size: 30px; --a-h1-weight: 400; --a-h1-case: uppercase; --a-h1-track: 0.01em; --a-radius: 10px; --a-radius-s: 10px; }
+.k-c.jasny { --a-bg: #ffffff; --a-card: #ffffff; --a-fg: #111111; --a-muted: #5b5b5b; --a-line: #111111; --a-accent: #ffd400; --a-on-accent: #111111; --a-ok: #127a3a; --a-err: #d1102a; --a-skip: #6b6b6b; --a-track: #f1f1f1; }
+.k-c.ciemny { --a-bg: #111111; --a-card: #1b1b1b; --a-fg: #ffffff; --a-muted: #b4b4b4; --a-line: #ffffff; --a-accent: #ffd400; --a-on-accent: #111111; --a-ok: #4ade80; --a-err: #ff5470; --a-skip: #9a9a9a; --a-track: #262626; }
+.k-c .poz, .k-c .pole { border-width: 2px; }
+.k-c .btn { border-width: 2px; border-radius: 10px; }
+.k-c .btn.glowny { border-color: var(--a-line); }
+.k-c .btn.drugi { border-color: var(--a-line); }
+.k-c .segment { border: 2px solid var(--a-line); background: transparent; border-radius: 10px; }
+.k-c .segment span { border-radius: 6px; }
+.k-c .segment span.aktywny { background: var(--a-accent); color: #111111; box-shadow: none; }
+.k-c h3 mark { background: var(--a-accent); color: #111111; padding: 0 6px; }
+.k-c .pasek-post i { background: var(--a-fg); }
+
+/* ---------- D: Studio + Okładka (baza A, nagłówek i podświetlenia z C) ---------- */
+.k-d { --a-display: "Anton", Impact, "Arial Narrow", sans-serif; --a-body: "Roboto", system-ui, sans-serif; --a-mono: "Roboto Mono", ui-monospace, monospace; --a-h1-size: 30px; --a-h1-weight: 400; --a-h1-case: uppercase; --a-h1-track: 0.01em; --a-radius: 12px; --a-radius-s: 8px; }
+.k-d.jasny { --a-bg: #f9f9f9; --a-card: #ffffff; --a-fg: #0f0f0f; --a-muted: #606060; --a-line: #e5e5e5; --a-accent: #ff0033; --a-on-accent: #ffffff; --a-ok: #188038; --a-err: #cc0000; --a-skip: #7a7a7a; --a-track: #f0f0f0; }
+.k-d.ciemny { --a-bg: #0f0f0f; --a-card: #212121; --a-fg: #f1f1f1; --a-muted: #aaaaaa; --a-line: #303030; --a-accent: #ff0033; --a-on-accent: #ffffff; --a-ok: #4fc36b; --a-err: #ff6b6b; --a-skip: #8e8e8e; --a-track: #2b2b2b; }
+.k-d h3 mark { background: #ffd400; color: #111111; padding: 0 6px; }
+.k-d .segment span.aktywny { background: #ffd400; color: #111111; }
+
+/* ---------- E: Okładka w barwach YouTube (baza C, czerwień zamiast żółtego) ---------- */
+.k-e { --a-display: "Anton", Impact, "Arial Narrow", sans-serif; --a-body: "Roboto", system-ui, sans-serif; --a-mono: "Roboto Mono", ui-monospace, monospace; --a-h1-size: 30px; --a-h1-weight: 400; --a-h1-case: uppercase; --a-h1-track: 0.01em; --a-radius: 10px; --a-radius-s: 10px; }
+.k-e.jasny { --a-bg: #ffffff; --a-card: #ffffff; --a-fg: #0f0f0f; --a-muted: #5b5b5b; --a-line: #0f0f0f; --a-accent: #ff0033; --a-on-accent: #ffffff; --a-ok: #127a3a; --a-err: #cc0000; --a-skip: #6b6b6b; --a-track: #f1f1f1; }
+.k-e.ciemny { --a-bg: #0f0f0f; --a-card: #1b1b1b; --a-fg: #ffffff; --a-muted: #b4b4b4; --a-line: #ffffff; --a-accent: #ff0033; --a-on-accent: #ffffff; --a-ok: #4ade80; --a-err: #ff6b6b; --a-skip: #9a9a9a; --a-track: #262626; }
+.k-e .poz, .k-e .pole { border-width: 2px; }
+.k-e .btn { border-width: 2px; border-radius: 10px; border-color: var(--a-line); }
+.k-e .segment { border: 2px solid var(--a-line); background: transparent; border-radius: 10px; }
+.k-e .segment span { border-radius: 6px; }
+.k-e .segment span.aktywny { background: var(--a-accent); color: #ffffff; box-shadow: none; }
+.k-e h3 mark { background: var(--a-accent); color: #ffffff; padding: 0 6px; }
+.k-e .pasek-post i { background: var(--a-fg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .app .pasek-post i { animation: postep 2.4s ease-in-out infinite alternate; }
+  @keyframes postep { from { width: 30%; } to { width: 82%; } }
+}
+</style>
+
+<main class="strona">
+  <section class="wstep">
+    <span class="etykieta">Miniaturki YouTube · tor designu · D4 (#14)</span>
+    <h1>Moodboard Miniaturek</h1>
+    <p>Trzy kierunki wyglądu Aplikacji i Ikony Wtyczki. Każdy pokazuje tę samą Aplikację w jasnym i ciemnym motywie, z dosłownymi tekstami z Wtyczki. Tytuły Filmów na listach to przykłady.</p>
+    <p>Przycisk pobierania na YouTube nie zmienia się między kierunkami: zgodnie ze specem kopiuje sąsiednie przyciski YouTube („Udostępnij”, „Zapisz”) i tak już działa.</p>
+  </section>
+
+  <section class="sekcja" aria-labelledby="h-insp">
+    <header>
+      <span class="etykieta">Inspiracje</span>
+      <h2 id="h-insp">Co zebraliśmy (D1)</h2>
+      <p>11 inspiracji z Dribbble i Pinteresta. Kliknięcie obrazka otwiera źródło.</p>
+    </header>
+    <div class="inspiracje">
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://dribbble.com/shots/16839400-Download-Status-UI-Design"><img src="inspiracje/02-dribbble.png" alt="Lista pobierania z ikonami stanu" loading="lazy"></a><span class="gdzie">02 · Aplikacja</span><p>Ikona stanu po lewej i krótki podpis stanu pod nazwą.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://dribbble.com/shots/3512632-Downloads-List"><img src="inspiracje/03-dribbble.png" alt="Lista pobrań z paskami postępu" loading="lazy"></a><span class="gdzie">03 · Aplikacja</span><p>Cienki pasek postępu i słowny stan w każdym wierszu.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://dribbble.com/shots/25907037--Batch-File-Upload-Error-Handling-UI"><img src="inspiracje/04-dribbble.png" alt="Zbiorcze błędy nad listą plików" loading="lazy"></a><span class="gdzie">04 · Aplikacja</span><p>Wzór dla stanów „błąd” i „pominięty + powód”.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://dribbble.com/shots/26525397-Downloads-Video-Player-Screens-UI-UX-VidSaver"><img src="inspiracje/05-dribbble.png" alt="Ekrany aplikacji VidSaver" loading="lazy"></a><span class="gdzie">05 · Aplikacja, Ikona</span><p>Strzałka w dół wpisana w kształt „play”.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://dribbble.com/shots/27556051-Slice-Chrome-extension"><img src="inspiracje/06-dribbble.png" alt="Rozszerzenie Slice dla Chrome" loading="lazy"></a><span class="gdzie">06 · Aplikacja</span><p>Spokojne karty, jeden mocny akcent.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://dribbble.com/shots/7299868-Download-Buttons"><img src="inspiracje/07-dribbble.png" alt="Animowane przyciski pobierania" loading="lazy"></a><span class="gdzie">07 · Przycisk pobierania</span><p>Strzałka zmienia się w ptaszek przy „Gotowe”.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://dribbble.com/shots/15508699-Download-button-animation-CodePen"><img src="inspiracje/08-dribbble.png" alt="Animacja przycisku pobierania" loading="lazy"></a><span class="gdzie">08 · Przycisk pobierania</span><p>Kształt ikony: strzałka nad kreską.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://bykreator.com/case-studies/alipal-google-chrome-extension-and-website-design"><img src="inspiracje/09-pinterest.png" alt="Rozszerzenie AliPal do pobierania obrazów" loading="lazy"></a><span class="gdzie">09 · wszystkie trzy</span><p>Najbliższy kuzyn: pobieranie obrazów, czerwień, prosta ikona.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://www.behance.net/gallery/179076219/IDM-Internet-Download-Manager-UI-Redesign"><img src="inspiracje/10-pinterest.png" alt="Ciemny menedżer pobierania IDM" loading="lazy"></a><span class="gdzie">10 · Aplikacja</span><p>Ciemna tabela z kolumną „Status”.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://pl.pinterest.com/pin/676595544022314360/"><img src="inspiracje/11-pinterest.png" alt="Ikona pobierania w kole" loading="lazy"></a><span class="gdzie">11 · Ikona Wtyczki</span><p>Gruba strzałka, dwa kolory, czytelna w 16 px.</p></figure>
+      <figure class="insp" style="margin:0"><a class="obraz" href="https://uxdesign.cc/the-bulk-experience-7fcca8080f82"><img src="inspiracje/12-pinterest.png" alt="Zaznaczanie wielu wierszy" loading="lazy"></a><span class="gdzie">12 · Aplikacja</span><p>Akcja zbiorcza w pasku nad listą.</p></figure>
+    </div>
+  </section>
+
+  <section class="sekcja" aria-labelledby="h-kier">
+    <header>
+      <span class="etykieta">Kierunki</span>
+      <h2 id="h-kier">Trzy kierunki do wyboru</h2>
+      <p>Komponenty we wszystkich trzech biorą wzorce z D2: przełącznik segmentowy (Watermelon Tabs 1), lista ze stanem po prawej (21st AI Task List), para przycisków (Watermelon Button 3).</p>
+    </header>
+
+    <!-- ===== A ===== -->
+    <article class="kierunek" id="kierunek-a">
+      <div class="kier-naglowek">
+        <span class="kier-litera" aria-hidden="true">A</span>
+        <div class="kier-opis">
+          <h3>Studio</h3>
+          <p>Aplikacja wygląda jak brakująca zakładka YouTube Studio: te same szarości, font Roboto i czerwień YouTube jako jedyny akcent. Najbezpieczniejszy wybór, spójny z Przyciskiem pobierania, który już kopiuje YouTube.</p>
+          <div class="fakty"><span><b>Fonty:</b> Roboto (nagłówki i tekst) + Roboto Mono (linki)</span><span><b>Akcent:</b> czerwień YouTube #FF0033</span><span><b>Z inspiracji:</b> 02, 06, 09</span></div>
+        </div>
+      </div>
+      <div class="paleta">
+        <div class="paleta-grupa"><span class="etykieta">Jasny</span><div class="probki"><span class="probka" style="background:#f9f9f9" title="tło #f9f9f9"></span><span class="probka" style="background:#ffffff" title="karta #ffffff"></span><span class="probka" style="background:#0f0f0f" title="tekst #0f0f0f"></span><span class="probka" style="background:#606060" title="pomocniczy #606060"></span><span class="probka" style="background:#ff0033" title="akcent #ff0033"></span></div></div>
+        <div class="paleta-grupa"><span class="etykieta">Ciemny</span><div class="probki"><span class="probka" style="background:#0f0f0f" title="tło #0f0f0f"></span><span class="probka" style="background:#212121" title="karta #212121"></span><span class="probka" style="background:#f1f1f1" title="tekst #f1f1f1"></span><span class="probka" style="background:#aaaaaa" title="pomocniczy #aaaaaa"></span><span class="probka" style="background:#ff0033" title="akcent #ff0033"></span></div></div>
+      </div>
+      <div class="podglady">
+        <div class="app k-a jasny" data-probka="a"></div>
+        <div class="app k-a ciemny" data-probka="a"></div>
+      </div>
+      <div class="ikony">
+        <div class="pasek jasny"><span class="adres"></span><span data-ikona="a" data-size="16"></span><span data-ikona="a" data-size="32"></span><span data-ikona="a" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+        <div class="pasek ciemny"><span class="adres"></span><span data-ikona="a" data-size="16"></span><span data-ikona="a" data-size="32"></span><span data-ikona="a" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+      </div>
+    </article>
+
+    <!-- ===== B ===== -->
+    <article class="kierunek" id="kierunek-b">
+      <div class="kier-naglowek">
+        <span class="kier-litera" aria-hidden="true">B</span>
+        <div class="kier-opis">
+          <h3>Stykówka</h3>
+          <p>Lista Filmów jako fotograficzna stykówka: wiersze to kolejne klatki z perforacją i numerem, ciepły grafit i oranż światła ciemni. Ma charakter warsztatu twórcy i odróżnia się od YouTube, nie gryząc się z nim.</p>
+          <div class="fakty"><span><b>Fonty:</b> Archivo wąski (nagłówki) + Archivo (tekst) + IBM Plex Mono (numery, linki)</span><span><b>Akcent:</b> oranż #D9480F / #FF6A2B</span><span><b>Z inspiracji:</b> 03, 04, 10</span></div>
+        </div>
+      </div>
+      <div class="paleta">
+        <div class="paleta-grupa"><span class="etykieta">Jasny</span><div class="probki"><span class="probka" style="background:#ecebe6" title="tło #ecebe6"></span><span class="probka" style="background:#f8f7f3" title="karta #f8f7f3"></span><span class="probka" style="background:#1e1d1a" title="tekst #1e1d1a"></span><span class="probka" style="background:#6a675f" title="pomocniczy #6a675f"></span><span class="probka" style="background:#d9480f" title="akcent #d9480f"></span></div></div>
+        <div class="paleta-grupa"><span class="etykieta">Ciemny</span><div class="probki"><span class="probka" style="background:#181715" title="tło #181715"></span><span class="probka" style="background:#23221f" title="karta #23221f"></span><span class="probka" style="background:#ebe8e1" title="tekst #ebe8e1"></span><span class="probka" style="background:#a29e94" title="pomocniczy #a29e94"></span><span class="probka" style="background:#ff6a2b" title="akcent #ff6a2b"></span></div></div>
+      </div>
+      <div class="podglady">
+        <div class="app k-b jasny" data-probka="b"></div>
+        <div class="app k-b ciemny" data-probka="b"></div>
+      </div>
+      <div class="ikony">
+        <div class="pasek jasny"><span class="adres"></span><span data-ikona="b" data-size="16"></span><span data-ikona="b" data-size="32"></span><span data-ikona="b" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+        <div class="pasek ciemny"><span class="adres"></span><span data-ikona="b" data-size="16"></span><span data-ikona="b" data-size="32"></span><span data-ikona="b" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+      </div>
+    </article>
+
+    <!-- ===== C ===== -->
+    <article class="kierunek" id="kierunek-c">
+      <div class="kier-naglowek">
+        <span class="kier-litera" aria-hidden="true">C</span>
+        <div class="kier-opis">
+          <h3>Okładka</h3>
+          <p>Język samych miniaturek: gruby, wąski krój w wersalikach, żółty marker i czarne obrysy. Najgłośniejszy kierunek, od razu „twórczy”, z ikoną, która w pasku przeglądarki rzuca się w oczy.</p>
+          <div class="fakty"><span><b>Fonty:</b> Anton (tylko nagłówek) + Figtree (tekst) + IBM Plex Mono (linki)</span><span><b>Akcent:</b> żółty marker #FFD400</span><span><b>Z inspiracji:</b> 07, 11, 12</span></div>
+        </div>
+      </div>
+      <div class="paleta">
+        <div class="paleta-grupa"><span class="etykieta">Jasny</span><div class="probki"><span class="probka" style="background:#ffffff" title="tło #ffffff"></span><span class="probka" style="background:#f1f1f1" title="tor #f1f1f1"></span><span class="probka" style="background:#111111" title="tekst i obrys #111111"></span><span class="probka" style="background:#5b5b5b" title="pomocniczy #5b5b5b"></span><span class="probka" style="background:#ffd400" title="akcent #ffd400"></span></div></div>
+        <div class="paleta-grupa"><span class="etykieta">Ciemny</span><div class="probki"><span class="probka" style="background:#111111" title="tło #111111"></span><span class="probka" style="background:#1b1b1b" title="karta #1b1b1b"></span><span class="probka" style="background:#ffffff" title="tekst i obrys #ffffff"></span><span class="probka" style="background:#b4b4b4" title="pomocniczy #b4b4b4"></span><span class="probka" style="background:#ffd400" title="akcent #ffd400"></span></div></div>
+      </div>
+      <div class="podglady">
+        <div class="app k-c jasny" data-probka="c"></div>
+        <div class="app k-c ciemny" data-probka="c"></div>
+      </div>
+      <div class="ikony">
+        <div class="pasek jasny"><span class="adres"></span><span data-ikona="c" data-size="16"></span><span data-ikona="c" data-size="32"></span><span data-ikona="c" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+        <div class="pasek ciemny"><span class="adres"></span><span data-ikona="c" data-size="16"></span><span data-ikona="c" data-size="32"></span><span data-ikona="c" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="sekcja" aria-labelledby="h-hybrydy">
+    <header>
+      <span class="etykieta">Połączenia A + C</span>
+      <h2 id="h-hybrydy">Studio i Okładka razem</h2>
+      <p>Dwa sposoby połączenia kierunków, które Ci pasują. Różnią się tym, który z nich jest bazą.</p>
+    </header>
+
+    <!-- ===== D ===== -->
+    <article class="kierunek" id="kierunek-d">
+      <div class="kier-naglowek">
+        <span class="kier-litera" aria-hidden="true">D</span>
+        <div class="kier-opis">
+          <h3>Studio z okładką</h3>
+          <p>Baza z A: szarości YouTube, miękkie karty, Roboto. Z C bierze tylko gruby nagłówek z żółtym markerem, żółtą aktywną Jakość i żółtą Ikonę Wtyczki. Czerwień zostaje dla akcji („Pobierz wszystkie”), żółty dla wyróżnień.</p>
+          <div class="fakty"><span><b>Fonty:</b> Anton (tylko nagłówek) + Roboto + Roboto Mono</span><span><b>Akcenty:</b> czerwień #FF0033 (akcja) + żółty #FFD400 (wyróżnienie)</span></div>
+        </div>
+      </div>
+      <div class="podglady">
+        <div class="app k-d jasny" data-probka="d"></div>
+        <div class="app k-d ciemny" data-probka="d"></div>
+      </div>
+      <div class="ikony">
+        <div class="pasek jasny"><span class="adres"></span><span data-ikona="c" data-size="16"></span><span data-ikona="c" data-size="32"></span><span data-ikona="c" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+        <div class="pasek ciemny"><span class="adres"></span><span data-ikona="c" data-size="16"></span><span data-ikona="c" data-size="32"></span><span data-ikona="c" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+      </div>
+    </article>
+
+    <!-- ===== E ===== -->
+    <article class="kierunek" id="kierunek-e">
+      <div class="kier-naglowek">
+        <span class="kier-litera" aria-hidden="true">E</span>
+        <div class="kier-opis">
+          <h3>Okładka w barwach YouTube</h3>
+          <p>Baza z C: czarne obrysy, gruby nagłówek, wyraźne bloki. Czerwień YouTube zastępuje żółty, a tekst jest w Roboto, więc całość czyta się jak YouTube w wersji „miniaturkowej”. Jeden akcent zamiast dwóch.</p>
+          <div class="fakty"><span><b>Fonty:</b> Anton (tylko nagłówek) + Roboto + Roboto Mono</span><span><b>Akcent:</b> czerwień #FF0033</span></div>
+        </div>
+      </div>
+      <div class="podglady">
+        <div class="app k-e jasny" data-probka="e"></div>
+        <div class="app k-e ciemny" data-probka="e"></div>
+      </div>
+      <div class="ikony">
+        <div class="pasek jasny"><span class="adres"></span><span data-ikona="e" data-size="16"></span><span data-ikona="e" data-size="32"></span><span data-ikona="e" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+        <div class="pasek ciemny"><span class="adres"></span><span data-ikona="e" data-size="16"></span><span data-ikona="e" data-size="32"></span><span data-ikona="e" data-size="48"></span><span class="podpis">16 · 32 · 48 px</span></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="wybor" aria-labelledby="h-wybor">
+    <span class="etykieta">Twój wybór</span>
+    <h2 id="h-wybor">Który kierunek?</h2>
+    <p>Napisz w czacie literę: <code>A</code>, <code>C</code>, <code>D</code> albo <code>E</code>. Możesz też dalej mieszać, np. „D, ale z ikoną z E”.</p>
+    <p class="muted">Wybór trafi na początek <code>design/wytyczne.md</code>, a na jego podstawie powstanie makieta wszystkich stanów (D5).</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  // Dosłowne teksty z src/rdzen/komunikaty.ts
+  var T = {
+    naglowek: 'Miniaturki YouTube', opis: 'Wklej linki do filmów YouTube, jeden pod drugim.',
+    rozpoznaj: 'Rozpoznaj', pobierz: 'Pobierz wszystkie',
+    jakosci: ['Najwyższa (1280×720)', 'Średnia (640×480)', 'Niska (480×360)'],
+    gotowe: 'Gotowe', pobieram: 'Pobieram…', czeka: 'Czeka',
+    niedostepny: 'Film niedostępny (prywatny lub usunięty)', short: 'To jest Short - pomijam',
+    podsumowanie: 'Filmów do pobrania: 3, pominiętych: 1'
+  };
+  var pozycje = [
+    { stan: 'ok', tytul: 'Jak zrobić miniaturkę, która klika (przykład)', kanal: 'Kanał Twórcy' },
+    { stan: 'trwa', tytul: 'Montaż w 10 minut - cały workflow (przykład)', kanal: 'Studio Montażu' },
+    { stan: 'err', tytul: 'youtu.be/aB3dE5fG7hJ', kanal: '' },
+    { stan: 'skip', tytul: 'youtube.com/shorts/Xy12Ab34Cd5', kanal: '' },
+    { stan: 'czeka', tytul: 'Recenzja kamery do vlogów (przykład)', kanal: 'Sprzęt na Ekranie' }
+  ];
+  var znaki = {
+    ok: '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="var(--a-ok)"/><path d="M5.2 9.3l2.4 2.4 5-5" fill="none" stroke="var(--a-card)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    trwa: '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="var(--a-track)" stroke-width="2.4"/><path d="M9 2a7 7 0 0 1 7 7" fill="none" stroke="var(--a-accent)" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    err: '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="var(--a-err)"/><path d="M9 5v5" stroke="var(--a-card)" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="12.8" r="1.1" fill="var(--a-card)"/></svg>',
+    skip: '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="var(--a-skip)" stroke-width="1.8"/><path d="M5.5 12.5l7-7" stroke="var(--a-skip)" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    czeka: '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="var(--a-muted)" stroke-width="1.8" stroke-dasharray="2.6 2.4"/></svg>'
+  };
+  var etykiety = { ok: T.gotowe, trwa: T.pobieram, err: T.niedostepny, skip: T.short, czeka: T.czeka };
+
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  document.querySelectorAll('[data-probka]').forEach(function (el) {
+    var k = el.getAttribute('data-probka');
+    var ciemny = el.classList.contains('ciemny');
+    var h = (k === 'c' || k === 'd' || k === 'e') ? '<mark>Miniaturki</mark> YouTube' : esc(T.naglowek);
+    var lista = pozycje.map(function (p, i) {
+      var nr = k === 'b' ? '<span class="nr">' + String(i + 1).padStart(2, '0') + '</span>' : '';
+      var stanHtml = '<span class="stan ' + p.stan + '">' + esc(etykiety[p.stan]) + '</span>';
+      if (p.stan === 'trwa') stanHtml += '<span class="pasek-post" aria-hidden="true"><i></i></span>';
+      return '<li class="poz">' +
+        '<span class="znak">' + znaki[p.stan] + '</span>' +
+        '<span class="txt">' + (nr ? nr : '') + '<span class="tytul">' + esc(p.tytul) + '</span>' + (p.kanal ? '<span class="kanal">' + esc(p.kanal) + '</span>' : '') + '</span>' +
+        '<span class="stan-kol">' + stanHtml + '</span>' +
+        '</li>';
+    }).join('');
+    el.innerHTML =
+      '<span class="motyw">' + (ciemny ? 'Ciemny motyw' : 'Jasny motyw') + '</span>' +
+      '<h3>' + h + '</h3>' +
+      '<p class="pod">' + esc(T.opis) + '</p>' +
+      '<div class="pole">youtube.com/watch?v=dQw4w9WgXcQ\nyoutu.be/aB3dE5fG7hJ?si=x9\nyoutube.com/shorts/Xy12Ab34Cd5</div>' +
+      '<div class="rzad">' +
+        '<span class="segment" role="presentation">' + T.jakosci.map(function (j, i) { return '<span class="' + (i === 0 ? 'aktywny' : '') + '">' + esc(j) + '</span>'; }).join('') + '</span>' +
+        '<span class="przyciski"><span class="btn drugi">' + esc(T.rozpoznaj) + '</span><span class="btn glowny">' + esc(T.pobierz) + '</span></span>' +
+      '</div>' +
+      '<span class="uwaga">' + esc(T.podsumowanie) + '</span>' +
+      '<ul class="lista">' + lista + '</ul>';
+  });
+
+  // Ikony Wtyczki: wektor, viewBox 128
+  function ikona(k, ciemnyPasek) {
+    if (k === 'a') {
+      return '<svg viewBox="0 0 128 128"><rect x="4" y="18" width="120" height="92" rx="26" fill="#ff0033"/><path d="M64 36v38" stroke="#fff" stroke-width="16" stroke-linecap="round"/><path d="M42 58l22 22 22-22" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 94h52" stroke="#fff" stroke-width="12" stroke-linecap="round"/></svg>';
+    }
+    if (k === 'b') {
+      var t = ciemnyPasek ? '#ebe8e1' : '#1e1d1a';
+      return '<svg viewBox="0 0 128 128"><rect x="6" y="6" width="116" height="116" rx="20" fill="' + t + '"/><rect x="26" y="34" width="76" height="60" rx="6" fill="none" stroke="' + (ciemnyPasek ? '#1e1d1a' : '#f8f7f3') + '" stroke-width="10"/><path d="M64 44v30" stroke="#ff6a2b" stroke-width="14" stroke-linecap="round"/><path d="M48 62l16 16 16-16" fill="none" stroke="#ff6a2b" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    }
+    if (k === 'e') {
+      return '<svg viewBox="0 0 128 128"><rect x="6" y="6" width="116" height="116" rx="24" fill="#ff0033" stroke="' + (ciemnyPasek ? '#fff' : '#0f0f0f') + '" stroke-width="10"/><path d="M64 28v50" stroke="#fff" stroke-width="18" stroke-linecap="round"/><path d="M38 58l26 26 26-26" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 100h60" stroke="#fff" stroke-width="14" stroke-linecap="round"/></svg>';
+    }
+    return '<svg viewBox="0 0 128 128"><rect x="6" y="6" width="116" height="116" rx="24" fill="#ffd400" stroke="#111" stroke-width="10"/><path d="M64 28v50" stroke="#111" stroke-width="18" stroke-linecap="round"/><path d="M38 58l26 26 26-26" fill="none" stroke="#111" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 100h60" stroke="#111" stroke-width="14" stroke-linecap="round"/></svg>';
+  }
+  document.querySelectorAll('[data-ikona]').forEach(function (el) {
+    var s = el.getAttribute('data-size');
+    var ciemny = el.closest('.pasek').classList.contains('ciemny');
+    el.innerHTML = ikona(el.getAttribute('data-ikona'), ciemny);
+    var svg = el.firstChild;
+    svg.setAttribute('width', s); svg.setAttribute('height', s);
+    svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Ikona Wtyczki ' + s + ' px');
+  });
+})();
+</script>
