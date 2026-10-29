@@ -100,7 +100,7 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 ### 17. Strona główna
 
 - **Krok:** Otwórz `https://www.youtube.com/` (zalogowany), najedź myszką na Miniaturkę dowolnego Filmu.
-- **Oczekiwany wynik:** W lewym górnym rogu Miniaturki pojawia się czarny przycisk „Miniaturka”; bez najechania go nie widać. Nie zasłania czasu trwania (prawy dolny róg) ani tytułu. Przycisk zostaje widoczny także wtedy, gdy po 1-2 s ruszy podgląd wideo.
+- **Oczekiwany wynik:** W lewym górnym rogu Miniaturki pojawia się czarny przycisk „Miniaturka”; bez najechania go nie widać. Nie zasłania czasu trwania (prawy dolny róg) ani tytułu. Trzymaj kursor nieruchomo na środku Miniaturki: przycisk zostaje widoczny także wtedy, gdy ruszy podgląd wideo (nawet jeśli startuje od razu), i da się go kliknąć bez otwierania Filmu.
 
 ### 18. Pobranie z karty bez otwierania Filmu
 
@@ -172,3 +172,10 @@ Wzór: makieta `design/makieta/index.html` (https://claude.ai/artifact/HVrmYQpRd
 
 - **Krok:** Wyłącz Wi-Fi, wklej `https://youtu.be/dQw4w9WgXcQ` i kliknij „Rozpoznaj”. Włącz Wi-Fi i kliknij „Pobierz wszystkie”.
 - **Oczekiwany wynik:** Wiersz po „Rozpoznaj” zostaje „Czeka” (pod spodem „Brak połączenia - spróbuj ponownie”), liczy się do „Filmów do pobrania: 1”, a po włączeniu Wi-Fi pobiera się normalnie.
+
+## Przycisk pobierania a podgląd wideo
+
+### 31. Przejście z karty na kartę i przewijanie
+
+- **Krok:** Na stronie głównej najedź na Miniaturkę, poczekaj, aż ruszy podgląd, i przesuń kursor powoli na sąsiednią kartę (w bok i w dół). Potem zostaw kursor na Miniaturce i przewiń stronę kółkiem myszy. Na koniec wyjedź kursorem poza okno przeglądarki.
+- **Oczekiwany wynik:** Przycisk „Miniaturka” widać zawsze tylko na jednej karcie - tej, nad którą jest kursor (także gdy kursor jest na brzegu grającego podglądu). Po przewinięciu przycisk przeskakuje na kartę, która znalazła się pod kursorem. Po wyjściu kursora poza okno żaden przycisk nie zostaje widoczny.

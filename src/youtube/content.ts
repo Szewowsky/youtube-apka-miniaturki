@@ -7,6 +7,7 @@ import './przycisk.css';
 import { idFilmuZLinku, idOgladanegoFilmu, jestStronaShorta } from './id-filmu';
 import { PREFIKS, utworzPrzycisk } from './przycisk';
 import { SELEKTORY } from './selektory';
+import { wskazanaKarta } from './wskazana-karta';
 
 function wstawPodFilmem(): void {
   if (jestStronaShorta(location.pathname) || location.pathname !== '/watch') return;
@@ -59,37 +60,79 @@ function zaplanuj(): void {
   });
 }
 
-// Podgląd wideo YouTube (po 1-2 s najechania) potrafi leżeć w warstwie nad całą kartą,
-// więc żaden z-index nie wyciągnie przycisku wyżej. Gdy kursor jest nad miejscem przycisku,
-// chowamy podgląd i pokazujemy przycisk; elementsFromPoint widzi też warstwy przykryte.
+// Widocznością przycisku na karcie steruje skrypt, nie samo :hover z CSS. Podgląd wideo YouTube
+// to warstwa poza kartą (docs/selektory-youtube.md, 3.5): gdy rusza (u części kont po <0,3 s),
+// karta traci :hover, choć kursor stoi w miejscu. Kartę pod kursorem liczymy więc z
+// elementsFromPoint, który widzi też warstwy przykryte podglądem, i trzymamy ją wskazaną,
+// dopóki kursor jest nad nią albo nad jej podglądem.
 const KLASA_WSKAZANY = `${PREFIKS}-wskazany`;
 const KLASA_NAD_PRZYCISKIEM = `${PREFIKS}-nad-przyciskiem`;
-let wskazany: Element | undefined;
-let pozycjaKursora: { x: number; y: number } | undefined;
+const SELEKTOR_PRZYCISKU_KARTY = `.${PREFIKS}-przycisk-karta`;
+let wskazana: Element | undefined;
+let kursor: { x: number; y: number } | undefined;
+let sprawdzenieZaplanowane = false;
+
+function idKarty(karta: Element): string | undefined {
+  return idFilmuZLinku(linkMiniaturki(karta)?.href);
+}
+
+function kartyPodKursorem(stos: readonly Element[]): Element[] {
+  const karty = new Set<Element>();
+  for (const element of stos) {
+    const karta = element.closest(SELEKTORY.kartaFilmu);
+    if (karta?.querySelector(SELEKTOR_PRZYCISKU_KARTY)) karty.add(karta);
+  }
+  return [...karty];
+}
+
+function idPodgladuPodKursorem(stos: readonly Element[]): string | null {
+  const podglad = stos.find((element) => element.closest(SELEKTORY.podgladAktywny))?.closest(SELEKTORY.podgladAktywny);
+  const link = podglad?.querySelector<HTMLAnchorElement>(SELEKTORY.linkPodgladu);
+  return idFilmuZLinku(link?.href) ?? null;
+}
+
+function ustawWskazana(karta: Element | undefined): void {
+  if (karta === wskazana) return;
+  wskazana?.querySelector(SELEKTOR_PRZYCISKU_KARTY)?.classList.remove(KLASA_WSKAZANY);
+  wskazana = karta;
+  wskazana?.querySelector(SELEKTOR_PRZYCISKU_KARTY)?.classList.add(KLASA_WSKAZANY);
+}
 
 function sprawdzKursor(): void {
-  const punkt = pozycjaKursora;
-  pozycjaKursora = undefined;
-  if (!punkt) return;
-  const pod = document
-    .elementsFromPoint(punkt.x, punkt.y)
-    .find((element) => element.closest(`.${PREFIKS}-przycisk-karta`))
-    ?.closest(`.${PREFIKS}-przycisk-karta`);
-  if (pod === wskazany) return;
-  wskazany?.classList.remove(KLASA_WSKAZANY);
-  wskazany = pod ?? undefined;
-  wskazany?.classList.add(KLASA_WSKAZANY);
-  document.documentElement.classList.toggle(KLASA_NAD_PRZYCISKIEM, Boolean(wskazany));
+  sprawdzenieZaplanowane = false;
+  if (!kursor) return;
+  const stos = document.elementsFromPoint(kursor.x, kursor.y);
+  ustawWskazana(
+    wskazanaKarta({ karty: kartyPodKursorem(stos), idPodgladu: idPodgladuPodKursorem(stos) }, wskazana, idKarty),
+  );
+  // Kursor nad samym przyciskiem: chowamy podgląd, żeby nie zasłaniał napisu i kliknięcia.
+  const nadPrzyciskiem = stos.some((element) => element.closest(SELEKTOR_PRZYCISKU_KARTY));
+  document.documentElement.classList.toggle(KLASA_NAD_PRZYCISKIEM, nadPrzyciskiem);
+}
+
+function zaplanujSprawdzenie(): void {
+  if (sprawdzenieZaplanowane) return;
+  sprawdzenieZaplanowane = true;
+  requestAnimationFrame(sprawdzKursor);
 }
 
 document.addEventListener(
   'mousemove',
   (zdarzenie) => {
-    if (!pozycjaKursora) requestAnimationFrame(sprawdzKursor);
-    pozycjaKursora = { x: zdarzenie.clientX, y: zdarzenie.clientY };
+    kursor = { x: zdarzenie.clientX, y: zdarzenie.clientY };
+    zaplanujSprawdzenie();
   },
   { passive: true },
 );
+// Przewijanie przesuwa karty pod nieruchomym kursorem, a mousemove wtedy nie przychodzi.
+document.addEventListener('scroll', zaplanujSprawdzenie, { passive: true, capture: true });
+// Kursor wyszedł poza okno: nic nie jest wskazane.
+document.addEventListener('mouseout', (zdarzenie) => {
+  if (zdarzenie.relatedTarget) return;
+  kursor = undefined;
+  ustawWskazana(undefined);
+  document.documentElement.classList.remove(KLASA_NAD_PRZYCISKIEM);
+});
 
 // Reagujemy tylko na nowe elementy: odtwarzacz co chwilę podmienia same teksty (licznik czasu).
 function dodanoElementy(zmiany: MutationRecord[]): boolean {
