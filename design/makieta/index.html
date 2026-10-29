@@ -1,0 +1,483 @@
+<title>Makieta Miniaturek</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;600;700&display=swap">
+<style>
+/* Układ: arkusz makiety. Sekcje jedna pod drugą (Aplikacja, Przycisk pod Filmem, Przycisk na karcie, Ikona, Porównanie); w każdej próbki jasna i ciemna obok siebie. Kierunek E z design/wytyczne.md. */
+:root {
+  --bg: #f3f3f3;
+  --surface: #ffffff;
+  --fg: #0f0f0f;
+  --muted: #5b5b5b;
+  --line: #d6d6d6;
+  --accent: #ff0033;
+  --font-ui: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, Menlo, monospace;
+  --font-display: "Anton", Impact, "Arial Narrow", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #181818; --surface: #202020; --fg: #f1f1f1; --muted: #a8a8a8; --line: #333333; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #181818; --surface: #202020; --fg: #f1f1f1; --muted: #a8a8a8; --line: #333333; color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.strona { max-width: 1200px; margin: 0 auto; padding-block: 40px 72px; display: flex; flex-direction: column; gap: 56px; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+h1 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: clamp(32px, 5vw, 48px); letter-spacing: 0.01em; line-height: 1.05; }
+h1 mark { background: var(--accent); color: #fff; padding: 0 8px; }
+h2 { font-size: 22px; font-weight: 700; }
+h4 { font-size: 13px; font-weight: 600; }
+.etykieta { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.wstep { display: flex; flex-direction: column; gap: 12px; max-width: 70ch; }
+.wstep p, .sekcja > header p { margin: 0; color: var(--muted); }
+.spis { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; }
+.spis a { color: var(--fg); }
+.sekcja { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px; }
+.sekcja > header { display: flex; flex-direction: column; gap: 6px; max-width: 72ch; }
+.dwa { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .dwa { grid-template-columns: 1fr; } }
+.notka { max-width: 72ch; padding: 14px 16px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 8px 8px 0; font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
+.notka p { margin: 0; }
+code { font-family: var(--font-mono); font-size: 0.9em; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ================= Aplikacja (kierunek E) ================= */
+.app {
+  --a-bg: #ffffff; --a-card: #ffffff; --a-fg: #0f0f0f; --a-muted: #5b5b5b; --a-line: #0f0f0f; --a-soft: #e2e2e2;
+  --a-accent: #ff0033; --a-on-accent: #ffffff; --a-ok: #127a3a; --a-err: #cc0000; --a-err-bg: #fdecec; --a-skip: #6b6b6b; --a-track: #f1f1f1;
+  background: var(--a-bg); color: var(--a-fg); font-family: var(--font-ui); font-size: 14px; line-height: 1.45;
+  border: 1px solid var(--line); border-radius: 14px; padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0;
+}
+.app.ciemny {
+  --a-bg: #0f0f0f; --a-card: #1b1b1b; --a-fg: #ffffff; --a-muted: #b4b4b4; --a-line: #ffffff; --a-soft: #3a3a3a;
+  --a-ok: #4ade80; --a-err: #ff6b6b; --a-err-bg: #2a1414; --a-skip: #9a9a9a; --a-track: #262626;
+}
+.app .motyw { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--a-muted); }
+.app h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: 30px; letter-spacing: 0.01em; line-height: 1.1; }
+.app h3 mark { background: var(--a-accent); color: var(--a-on-accent); padding: 0 6px; }
+.app .pod { margin: 0; color: var(--a-muted); font-size: 13px; }
+.app .pole-etykieta { font-size: 12.5px; font-weight: 600; }
+.app .pole { border: 2px solid var(--a-line); border-radius: 10px; background: var(--a-card); padding: 10px 12px; font-family: var(--font-mono); font-size: 12px; line-height: 1.65; color: var(--a-fg); overflow-x: auto; white-space: pre; min-height: 84px; }
+.app .pole.puste { color: var(--a-muted); white-space: normal; }
+.app .rzad { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.app .grupa { display: flex; flex-direction: column; gap: 6px; }
+.app .segment { display: inline-flex; padding: 3px; gap: 2px; border: 2px solid var(--a-line); border-radius: 10px; }
+.app .segment span { padding: 5px 11px; border-radius: 6px; font-size: 12.5px; font-weight: 500; color: var(--a-muted); white-space: nowrap; }
+.app .segment span.aktywny { background: var(--a-accent); color: var(--a-on-accent); font-weight: 600; }
+.app .przyciski { display: flex; flex-wrap: wrap; gap: 8px; }
+.app .btn { display: inline-flex; align-items: center; gap: 6px; border: 2px solid var(--a-line); border-radius: 10px; padding: 7px 14px; font-size: 13px; font-weight: 600; white-space: nowrap; background: transparent; color: var(--a-fg); }
+.app .btn.glowny { background: var(--a-accent); color: var(--a-on-accent); }
+.app .btn.wylaczony { background: transparent; color: var(--a-muted); border-color: var(--a-soft); }
+.app .podsum { font-size: 12.5px; color: var(--a-muted); }
+.app .podsum b { color: var(--a-fg); font-weight: 600; }
+.app .lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.app .poz { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 12px; padding: 9px 12px; border: 2px solid var(--a-line); border-radius: 10px; background: var(--a-card); min-width: 0; }
+.app .poz.pominiety { border-color: var(--a-soft); border-style: dashed; }
+.app .poz.pominiety .tytul { color: var(--a-muted); font-weight: 500; font-family: var(--font-mono); font-size: 12px; }
+.app .poz.blad { border-color: var(--a-err); background: var(--a-err-bg); }
+.app .txt { min-width: 0; display: flex; flex-direction: column; }
+.app .tytul { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app .kanal { font-size: 12px; color: var(--a-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app .stan-kol { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.app .stan { font-size: 12px; font-weight: 600; white-space: nowrap; }
+.app .stan.ok { color: var(--a-ok); }
+.app .stan.err { color: var(--a-err); }
+.app .stan.skip, .app .stan.czeka { color: var(--a-muted); font-weight: 500; }
+.app .pasek-post { width: 72px; height: 4px; border-radius: 2px; background: var(--a-track); overflow: hidden; }
+.app .pasek-post i { display: block; width: 58%; height: 100%; background: var(--a-fg); }
+.app .znak svg { display: block; }
+.app .wczytuje { color: var(--a-muted); font-style: italic; font-weight: 400; }
+@media (max-width: 560px) {
+  .app .poz { grid-template-columns: 22px 1fr; }
+  .app .stan-kol { grid-column: 2; align-items: flex-start; }
+}
+.legenda { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px 20px; font-size: 13px; }
+.legenda div { display: flex; flex-direction: column; gap: 2px; }
+.legenda b { font-weight: 600; }
+.legenda span { color: var(--muted); }
+
+/* ================= YouTube (Przycisk pobierania) ================= */
+.yt { --y-bg: #ffffff; --y-fg: #0f0f0f; --y-muted: #606060; --y-btn: rgba(0,0,0,0.05); --y-btn-hover: rgba(0,0,0,0.1); --y-line: rgba(0,0,0,0.1);
+  --y-ok-bg: #1e8e3e; --y-ok-fg: #ffffff; --y-err-bg: #cc0000; --y-err-fg: #ffffff;
+  background: var(--y-bg); color: var(--y-fg); font-family: Roboto, Arial, sans-serif; border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; overflow: hidden; }
+.yt.ciemny { --y-bg: #0f0f0f; --y-fg: #f1f1f1; --y-muted: #aaaaaa; --y-btn: rgba(255,255,255,0.1); --y-btn-hover: rgba(255,255,255,0.2); --y-line: rgba(255,255,255,0.2);
+  --y-ok-bg: #81c995; --y-ok-fg: #0f0f0f; --y-err-bg: #f28b82; --y-err-fg: #0f0f0f; }
+.yt .motyw { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--y-muted); }
+.yt .tytul-filmu { font-size: 20px; font-weight: 700; line-height: 1.3; }
+.yt .wiersz-stanu { display: flex; flex-direction: column; gap: 6px; }
+.yt .wiersz-stanu > span { font-family: var(--font-mono); font-size: 11px; color: var(--y-muted); }
+.yt .akcje { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+.yt .ytb { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: 20px; background: var(--y-btn); color: var(--y-fg); font-size: 14px; font-weight: 500; line-height: 40px; white-space: nowrap; flex: none; }
+.yt .ytb svg { width: 24px; height: 24px; fill: currentColor; flex: none; }
+.yt .ytb.ikona { width: 40px; padding: 0; justify-content: center; }
+.yt .ytb.like { padding: 0; gap: 0; }
+.yt .ytb.like span { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px 0 16px; }
+.yt .ytb.like span + span { border-left: 1px solid var(--y-line); padding: 0 12px; }
+.yt .ytb.mty.najechany { background: var(--y-btn-hover); }
+.yt .ytb.mty.pobieram { opacity: 0.85; }
+.yt .ytb.mty.gotowe { background: var(--y-ok-bg); color: var(--y-ok-fg); }
+.yt .ytb.mty.blad { background: var(--y-err-bg); color: var(--y-err-fg); }
+.yt .ytb.mty { outline: 2px dashed transparent; }
+.znacznik { outline: 2px dashed var(--accent) !important; outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .obrot { animation: obrot 0.9s linear infinite; transform-origin: 50% 50%; }
+  @keyframes obrot { to { transform: rotate(360deg); } }
+  .app .pasek-post i { animation: postep 2.4s ease-in-out infinite alternate; }
+  @keyframes postep { from { width: 30%; } to { width: 84%; } }
+}
+
+/* Karta Filmu */
+.karty { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.karta { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.miniatura { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 12px; overflow: hidden; }
+.miniatura .tlo-m { position: absolute; inset: 0; }
+.miniatura .napis-m { position: absolute; left: 10px; bottom: 30px; right: 10px; font-family: var(--font-display); text-transform: uppercase; font-size: 22px; line-height: 1; color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35); }
+.czas { position: absolute; right: 6px; bottom: 6px; padding: 1px 4px; border-radius: 4px; background: rgba(0,0,0,0.6); color: #fff; font-size: 12px; font-weight: 500; line-height: 18px; }
+.kbtn { position: absolute; top: 8px; left: 8px; display: inline-flex; align-items: center; gap: 6px; height: 32px; max-width: calc(100% - 16px); padding: 0 10px 0 6px; border-radius: 16px; background: rgba(0,0,0,0.6); color: #fff; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.kbtn svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+.kbtn .t { overflow: hidden; text-overflow: ellipsis; }
+.kbtn.najechany { background: rgba(0,0,0,0.8); }
+.kbtn.gotowe { background: var(--y-ok-bg); color: var(--y-ok-fg); }
+.kbtn.blad { background: var(--y-err-bg); color: var(--y-err-fg); }
+.karta .meta { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--y-muted); }
+.karta .meta b { color: var(--y-fg); font-weight: 500; font-size: 14px; line-height: 1.35; }
+.karta .stan-karty { font-family: var(--font-mono); font-size: 11px; color: var(--y-muted); }
+
+/* ================= Ikona ================= */
+.ikony-siatka { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; }
+.ikona-duza { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.ikona-duza .ramka { padding: 12px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; gap: 20px; align-items: flex-end; }
+.ikona-duza svg { display: block; }
+.paski { display: flex; flex-direction: column; gap: 10px; }
+.pasek { display: flex; align-items: center; gap: 14px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); flex-wrap: wrap; }
+.pasek.jasny { background: #f1f3f4; }
+.pasek.ciemny { background: #35363a; }
+.pasek .adres { flex: 1 1 140px; max-width: 360px; height: 26px; border-radius: 13px; }
+.pasek.jasny .adres { background: #ffffff; }
+.pasek.ciemny .adres { background: #202124; }
+.pasek .inne { width: 16px; height: 16px; border-radius: 4px; }
+.pasek.jasny .inne { background: #9aa0a6; }
+.pasek.ciemny .inne { background: #80868b; }
+.pasek .podpis { font-family: var(--font-mono); font-size: 11px; }
+.pasek.jasny .podpis { color: #5f6368; }
+.pasek.ciemny .podpis { color: #bdc1c6; }
+.pasek svg { display: block; flex: none; }
+
+/* ================= Porównanie ================= */
+.para { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.para .yt { padding: 14px 16px; }
+.zrzuty { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .zrzuty { grid-template-columns: 1fr; } }
+.zrzut { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.zrzut img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); display: block; background: var(--surface); }
+.zrzut .brak { padding: 28px 16px; border-radius: 10px; border: 1px dashed var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+table.pomiary { border-collapse: collapse; font-size: 13px; width: 100%; }
+table.pomiary th, table.pomiary td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.pomiary th { font-weight: 600; color: var(--muted); font-size: 12px; }
+table.pomiary td:first-child { font-weight: 500; }
+.tabela-wrap { overflow-x: auto; }
+</style>
+
+<main class="strona">
+  <section class="wstep">
+    <span class="etykieta">Miniaturki YouTube · tor designu · D5 (#15) · kierunek E</span>
+    <h1><mark>Makieta</mark> Miniaturek</h1>
+    <p>Wszystkie stany Aplikacji, Przycisku pobierania i Ikony Wtyczki w kierunku „Okładka w barwach YouTube”, w jasnym i ciemnym motywie. Teksty są dosłownie z Wtyczki. Tytuły i kanały Filmów to przykłady.</p>
+    <nav class="spis" aria-label="Sekcje">
+      <a href="#aplikacja">Aplikacja</a><a href="#pod-filmem">Przycisk pod Filmem</a><a href="#na-karcie">Przycisk na karcie</a><a href="#ikona">Ikona Wtyczki</a><a href="#porownanie">Porównanie z YouTube</a>
+    </nav>
+  </section>
+
+  <!-- ================= APLIKACJA ================= -->
+  <section class="sekcja" id="aplikacja" aria-labelledby="h-app">
+    <header>
+      <span class="etykieta">1 · Aplikacja</span>
+      <h2 id="h-app">Lista po rozpoznaniu i w trakcie pobierania</h2>
+      <p>Jedna lista zawiera każdy stan, jaki może mieć pozycja. „Pobierz wszystkie” jest aktywny, bo są Filmy do pobrania.</p>
+    </header>
+    <div class="dwa">
+      <div class="app jasny" data-app="pelna"></div>
+      <div class="app ciemny" data-app="pelna"></div>
+    </div>
+
+    <header>
+      <h2>Przed rozpoznaniem</h2>
+      <p>Puste pole, „Pobierz wszystkie” nieaktywny. Przy wyłączonym przycisku obrys jest jaśniejszy, a tekst szary, więc nie wygląda na klikalny.</p>
+    </header>
+    <div class="dwa">
+      <div class="app jasny" data-app="pusta"></div>
+      <div class="app ciemny" data-app="pusta"></div>
+    </div>
+
+    <div class="legenda" aria-label="Legenda stanów">
+      <div><b>Czeka</b><span>Przerywane kółko, szary napis.</span></div>
+      <div><b>Wczytuję tytuł…</b><span>Kursywa w miejscu tytułu, zanim oEmbed odpowie.</span></div>
+      <div><b>Pobieram…</b><span>Obracający się łuk w kolorze akcentu i cienki pasek postępu.</span></div>
+      <div><b>Gotowe</b><span>Zielone kółko z ptaszkiem, zielony napis.</span></div>
+      <div><b>Błąd</b><span>Obrys i tło wiersza w kolorze błędu, kółko z wykrzyknikiem.</span></div>
+      <div><b>Pominięty + powód</b><span>Przerywany, jasny obrys, przekreślone kółko, link zamiast tytułu.</span></div>
+    </div>
+
+    <div class="notka">
+      <p><b>Czerwień akcji i czerwień błędu.</b> Akcent (#FF0033) występuje tylko jako wypełnienie: przycisk główny, aktywna Jakość, marker nagłówka. Błąd (#CC0000) występuje tylko jako obrys, jasne tło wiersza i ikona z wykrzyknikiem. Różni je forma, nie sam odcień, więc się nie mylą.</p>
+      <p><b>Propozycja z testów (Uwaga 3):</b> Film niedostępny wykryty już przy „Rozpoznaj” powinien od razu mieć stan błędu i nie liczyć się do „Filmów do pobrania”. To zmiana działania, nie wyglądu, więc trafia do T8 albo osobnego ticketu.</p>
+    </div>
+  </section>
+
+  <!-- ================= POD FILMEM ================= -->
+  <section class="sekcja" id="pod-filmem" aria-labelledby="h-film">
+    <header>
+      <span class="etykieta">2 · Przycisk pobierania pod Filmem</span>
+      <h2 id="h-film">W rzędzie z „Udostępnij” i „Zapisz”</h2>
+      <p>Kształt, wysokość, font i kolory kopiują sąsiednie przyciski YouTube, a nie kierunek E. Przerywana ramka pokazuje nasz przycisk. Cztery stany jeden pod drugim.</p>
+    </header>
+    <div class="dwa">
+      <div class="yt jasny" data-yt="film"></div>
+      <div class="yt ciemny" data-yt="film"></div>
+    </div>
+    <div class="notka">
+      <p><b>Zmierzone na żywo 2026-10-29:</b> 40 px wysokości, zaokrąglenie 20 px, odstęp wewnętrzny 0 16 px, Roboto 14 px / 500, ikona 24 px, 6 px między ikoną a napisem, 8 px między przyciskami. Jedyna różnica względem obecnego kodu: lewy odstęp wewnętrzny 12 px zamiast 16 px.</p>
+      <p><b>„Udostępnij” i „Zapisz” to dziś same ikony</b> (40×40 px), napis ma tylko licznik przy „Lubię to”. „Miniaturka” z napisem jest więc jedynym szerokim przyciskiem w rzędzie. Zostawiamy napis, bo sama ikona pobierania myliłaby się z przyciskiem „Pobierz” z YouTube Premium.</p>
+      <p>Pominięte celowo: subtelny efekt „szkła” na ikonach YouTube (obwódka z gradientem). Niski priorytet, opcjonalny w T8.</p>
+    </div>
+  </section>
+
+  <!-- ================= NA KARCIE ================= -->
+  <section class="sekcja" id="na-karcie" aria-labelledby="h-karta">
+    <header>
+      <span class="etykieta">3 · Przycisk pobierania na karcie Filmu</span>
+      <h2 id="h-karta">Po najechaniu na kartę na liście</h2>
+      <p>Lewy górny róg Miniaturki: nie zasłania czasu trwania (prawy dolny róg), przycisków podglądu wideo (prawy górny) ani tytułu. Tło i font jak znaczek czasu trwania YouTube: czerń 60%, po najechaniu 80%, Roboto 12 px / 500.</p>
+    </header>
+    <div class="dwa">
+      <div class="yt jasny" data-yt="karty"></div>
+      <div class="yt ciemny" data-yt="karty"></div>
+    </div>
+    <div class="notka">
+      <p><b>Znany błąd (Błąd 1 z testów):</b> gdy YouTube odtwarza podgląd wideo, przycisk na karcie znika. Makieta pokazuje stan docelowy; naprawa to praca wdrożeniowa.</p>
+    </div>
+  </section>
+
+  <!-- ================= IKONA ================= -->
+  <section class="sekcja" id="ikona" aria-labelledby="h-ikona">
+    <header>
+      <span class="etykieta">4 · Ikona Wtyczki</span>
+      <h2 id="h-ikona">128 · 48 · 32 · 16 px</h2>
+      <p>Czerwony zaokrąglony kwadrat z obrysem, biała gruba strzałka w dół nad kreską. Obrys jest ciemny na jasnym pasku i jasny na ciemnym, żeby kwadrat nie zlewał się z tłem. W 16 px zostają tylko kwadrat i strzałka.</p>
+    </header>
+    <div class="ikony-siatka">
+      <div class="ikona-duza">
+        <div class="ramka">
+          <span data-ikona="128" data-tlo="jasne"></span>
+          <span data-ikona="48" data-tlo="jasne"></span>
+          <span data-ikona="32" data-tlo="jasne"></span>
+          <span data-ikona="16" data-tlo="jasne"></span>
+        </div>
+        <span class="etykieta">Wersja wektorowa, obrys ciemny</span>
+      </div>
+    </div>
+    <div class="paski">
+      <div class="pasek jasny"><span class="adres"></span><span class="inne"></span><span class="inne"></span><span data-ikona="16" data-tlo="jasne"></span><span class="podpis">jasny pasek · 16 px</span></div>
+      <div class="pasek ciemny"><span class="adres"></span><span class="inne"></span><span class="inne"></span><span data-ikona="16" data-tlo="ciemne"></span><span class="podpis">ciemny pasek · 16 px</span></div>
+      <div class="pasek jasny"><span class="adres"></span><span data-ikona="32" data-tlo="jasne"></span><span class="podpis">jasny · 32 px (ekran Retina)</span></div>
+      <div class="pasek ciemny"><span class="adres"></span><span data-ikona="32" data-tlo="ciemne"></span><span class="podpis">ciemny · 32 px (ekran Retina)</span></div>
+    </div>
+  </section>
+
+  <!-- ================= PORÓWNANIE ================= -->
+  <section class="sekcja" id="porownanie" aria-labelledby="h-por">
+    <header>
+      <span class="etykieta">5 · Porównanie z YouTube</span>
+      <h2 id="h-por">Makieta obok prawdziwej strony</h2>
+      <p>Zrzuty z żywej strony YouTube z zainstalowaną Wtyczką (ego-browser, 2026-10-29, okno 1745 px), pod każdym ten sam fragment z makiety. Pełne pomiary: <code>design/makieta/pomiary-youtube.md</code>.</p>
+    </header>
+    <div class="zrzuty" data-zrzuty></div>
+    <div class="tabela-wrap" data-pomiary></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  // Dosłowne teksty z src/rdzen/komunikaty.ts
+  var K = {
+    short: 'To jest Short - pomijam', nieprawidlowyLink: 'To nie jest link do filmu YouTube', duplikat: 'Duplikat', ponadLimit: 'Ponad limit 50',
+    filmNiedostepny: 'Film niedostępny (prywatny lub usunięty)', brakPolaczenia: 'Brak połączenia - spróbuj ponownie', odswiezStrone: 'Odśwież stronę',
+    gotowe: 'Gotowe', czeka: 'Czeka', pobieram: 'Pobieram…'
+  };
+  var A = {
+    naglowek: 'Miniaturki YouTube', opis: 'Wklej linki do filmów YouTube, jeden pod drugim.', poleLinkow: 'Linki do filmów',
+    rozpoznaj: 'Rozpoznaj', jakosc: 'Jakość', jakosci: ['Najwyższa (1280×720)', 'Średnia (640×480)', 'Niska (480×360)'],
+    pobierzWszystkie: 'Pobierz wszystkie', wczytuje: 'Wczytuję tytuł…'
+  };
+  var P = { etykieta: 'Miniaturka', podpowiedz: 'Pobierz Miniaturkę' };
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  var znaki = {
+    ok: '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="var(--a-ok)"/><path d="M5.8 10.3l2.7 2.7 5.6-5.6" fill="none" stroke="var(--a-card)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    trwa: '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.6" fill="none" stroke="var(--a-track)" stroke-width="2.6"/><g class="obrot"><path d="M10 2.4a7.6 7.6 0 0 1 7.6 7.6" fill="none" stroke="var(--a-accent)" stroke-width="2.6" stroke-linecap="round"/></g></svg>',
+    err: '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="var(--a-err)"/><path d="M10 5.4v5.6" stroke="var(--a-card)" stroke-width="2.2" stroke-linecap="round"/><circle cx="10" cy="14.4" r="1.25" fill="var(--a-card)"/></svg>',
+    skip: '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.8" fill="none" stroke="var(--a-skip)" stroke-width="1.9"/><path d="M6.2 13.8l7.6-7.6" stroke="var(--a-skip)" stroke-width="1.9" stroke-linecap="round"/></svg>',
+    czeka: '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.8" fill="none" stroke="var(--a-muted)" stroke-width="1.9" stroke-dasharray="2.8 2.6"/></svg>'
+  };
+
+  var pozycje = [
+    { typ: 'ok', tytul: 'Jak zrobić miniaturkę, która klika (przykład)', kanal: 'Kanał Twórcy', stan: K.gotowe },
+    { typ: 'trwa', tytul: 'Montaż w 10 minut - cały workflow (przykład)', kanal: 'Studio Montażu', stan: K.pobieram },
+    { typ: 'czeka', tytul: 'Recenzja kamery do vlogów (przykład)', kanal: 'Sprzęt na Ekranie', stan: K.czeka },
+    { typ: 'czeka', tytul: null, kanal: 'youtu.be/Qw3rTy7uIoP', stan: K.czeka },
+    { typ: 'err', tytul: 'youtube.com/watch?v=aaaaaaaaaaa', kanal: '', stan: K.filmNiedostepny },
+    { typ: 'err', tytul: '5 błędów na miniaturkach (przykład)', kanal: 'Kanał Twórcy', stan: K.brakPolaczenia },
+    { typ: 'skip', tytul: 'youtube.com/shorts/Xy12Ab34Cd5', kanal: '', stan: K.short },
+    { typ: 'skip', tytul: 'instagram.com/p/C9abcDEF', kanal: '', stan: K.nieprawidlowyLink },
+    { typ: 'skip', tytul: 'youtu.be/dQw4w9WgXcQ', kanal: '', stan: K.duplikat },
+    { typ: 'skip', tytul: 'youtube.com/watch?v=Zz9Yy8Xx7Ww', kanal: '', stan: K.ponadLimit }
+  ];
+  var klasy = { ok: 'ok', trwa: '', czeka: 'czeka', err: 'err', skip: 'skip' };
+
+  function wiersz(p) {
+    var cls = p.typ === 'skip' ? ' pominiety' : p.typ === 'err' ? ' blad' : '';
+    var tytul = p.tytul === null ? '<span class="tytul wczytuje">' + esc(A.wczytuje) + '</span>' : '<span class="tytul">' + esc(p.tytul) + '</span>';
+    var stan = '<span class="stan ' + klasy[p.typ] + '">' + esc(p.stan) + '</span>';
+    if (p.typ === 'trwa') stan += '<span class="pasek-post" aria-hidden="true"><i></i></span>';
+    return '<li class="poz' + cls + '"><span class="znak">' + znaki[p.typ] + '</span><span class="txt">' + tytul + (p.kanal ? '<span class="kanal">' + esc(p.kanal) + '</span>' : '') + '</span><span class="stan-kol">' + stan + '</span></li>';
+  }
+
+  function segment(aktywny) {
+    return '<span class="segment" role="presentation">' + A.jakosci.map(function (j, i) { return '<span class="' + (i === aktywny ? 'aktywny' : '') + '">' + esc(j) + '</span>'; }).join('') + '</span>';
+  }
+
+  document.querySelectorAll('[data-app]').forEach(function (el) {
+    var ciemny = el.classList.contains('ciemny');
+    var pelna = el.getAttribute('data-app') === 'pelna';
+    var pole = pelna
+      ? '<div class="pole">youtube.com/watch?v=dQw4w9WgXcQ\nyoutu.be/aB3dE5fG7hJ?si=x9\nyoutube.com/shorts/Xy12Ab34Cd5\ninstagram.com/p/C9abcDEF\n…</div>'
+      : '<div class="pole puste">np. https://www.youtube.com/watch?v=…</div>';
+    var podsum = pelna ? '<span class="podsum"><b>Filmów do pobrania: 6</b>, pominiętych: 4</span>' : '';
+    el.innerHTML =
+      '<span class="motyw">' + (ciemny ? 'Ciemny motyw' : 'Jasny motyw') + '</span>' +
+      '<h3><mark>Miniaturki</mark> YouTube</h3>' +
+      '<p class="pod">' + esc(A.opis) + '</p>' +
+      '<div class="grupa"><span class="pole-etykieta">' + esc(A.poleLinkow) + '</span>' + pole + '</div>' +
+      '<div class="rzad">' +
+        '<div class="grupa"><span class="pole-etykieta">' + esc(A.jakosc) + '</span>' + segment(0) + '</div>' +
+        '<span class="przyciski"><span class="btn">' + esc(A.rozpoznaj) + '</span><span class="btn ' + (pelna ? 'glowny' : 'wylaczony') + '">' + esc(A.pobierzWszystkie) + '</span></span>' +
+      '</div>' +
+      podsum +
+      (pelna ? '<ul class="lista">' + pozycje.map(wiersz).join('') + '</ul>' : '');
+  });
+
+  // Ikony YouTube (uproszczone, w stylu Material)
+  var IK = {
+    pobierz: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v8.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V4zM5 18h14v2H5z"/></svg>',
+    obrot: '<svg viewBox="0 0 24 24" aria-hidden="true"><g class="obrot"><path d="M12 4a8 8 0 0 1 8 8h-2a6 6 0 0 0-6-6V4z"/></g><path d="M12 4a8 8 0 1 0 8 8h-2a6 6 0 1 1-6-6V4z" opacity=".3"/></svg>',
+    ok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.2L5.3 12l-1.4 1.4 5.6 5.6L20.1 8.4 18.7 7z"/></svg>',
+    blad: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 6h2v8h-2zM11 16h2v2h-2z"/></svg>',
+    like: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h4v10H3zM9 20h8.2c.8 0 1.5-.5 1.8-1.2l2-6.3c.3-1-.4-2.5-1.8-2.5H14l.9-4.2c.2-.9-.6-1.8-1.5-1.8L9 10v10z"/></svg>',
+    dislike: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14h-4V4h4zM15 4H6.8c-.8 0-1.5.5-1.8 1.2l-2 6.3c-.3 1 .4 2.5 1.8 2.5H10l-.9 4.2c-.2.9.6 1.8 1.5 1.8L15 14V4z"/></svg>',
+    udostepnij: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6V3l7 7-7 7v-3.1c-4.4 0-7.5 1.4-10 4.6 1-4.6 3.8-9.1 10-10.5z"/></svg>',
+    zapisz: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h11v2H4zM4 10h11v2H4zM4 14h7v2H4zM17 14v-3h2v3h3v2h-3v3h-2v-3h-3v-2z"/></svg>'
+  };
+  var stanyFilm = [
+    { cls: '', ik: IK.pobierz, t: P.etykieta, opis: 'Zwykły (podpowiedź: „' + P.podpowiedz + '”)' },
+    { cls: 'pobieram', ik: IK.obrot, t: K.pobieram, opis: 'Pobieranie (kursor oczekiwania, przycisk nieaktywny)' },
+    { cls: 'gotowe', ik: IK.ok, t: K.gotowe, opis: 'Gotowe (wraca do zwykłego po chwili)' },
+    { cls: 'blad', ik: IK.blad, t: K.brakPolaczenia, opis: 'Błąd (np. „' + K.odswiezStrone + '”, „' + K.filmNiedostepny + '”)' }
+  ];
+
+  function rzadYT(s) {
+    return '<div class="akcje">' +
+      '<span class="ytb like"><span>' + IK.like + '12 tys.</span><span>' + IK.dislike + '</span></span>' +
+      '<span class="ytb ikona" title="Udostępnij">' + IK.udostepnij + '</span>' +
+      '<span class="ytb mty znacznik ' + s.cls + '">' + s.ik + esc(s.t) + '</span>' +
+      '<span class="ytb ikona" title="Zapisz">' + IK.zapisz + '</span>' +
+      '</div>';
+  }
+
+  var miniatury = [
+    { bg: 'linear-gradient(135deg,#ff0033 0%,#7a0018 100%)', napis: '10 błędów miniaturek', czas: '12:48' },
+    { bg: 'linear-gradient(135deg,#1f6feb 0%,#0b1f4d 100%)', napis: 'Montaż w 10 minut', czas: '9:05' },
+    { bg: 'linear-gradient(135deg,#f5a524 0%,#7a3d00 100%)', napis: 'Kamera do vloga?', czas: '21:17' },
+    { bg: 'linear-gradient(135deg,#2bb673 0%,#0b4d2c 100%)', napis: 'Pierwsze 1000 subów', czas: '15:32' }
+  ];
+  var stanyKarta = [
+    { cls: 'najechany', ik: IK.pobierz, t: P.etykieta, opis: 'Zwykły, kursor na przycisku' },
+    { cls: '', ik: IK.obrot, t: K.pobieram, opis: 'Pobieranie' },
+    { cls: 'gotowe', ik: IK.ok, t: K.gotowe, opis: 'Gotowe' },
+    { cls: 'blad', ik: IK.blad, t: K.brakPolaczenia, opis: 'Błąd (długi tekst skraca się z „…”)' }
+  ];
+
+  document.querySelectorAll('[data-yt]').forEach(function (el) {
+    var ciemny = el.classList.contains('ciemny');
+    var html = '<span class="motyw">YouTube · ' + (ciemny ? 'ciemny motyw' : 'jasny motyw') + '</span>';
+    if (el.getAttribute('data-yt') === 'film') {
+      html += '<span class="tytul-filmu">Jak zrobić miniaturkę, która klika (przykład)</span>';
+      html += stanyFilm.map(function (s) { return '<div class="wiersz-stanu"><span>' + esc(s.opis) + '</span>' + rzadYT(s) + '</div>'; }).join('');
+    } else {
+      html += '<div class="karty">' + stanyKarta.map(function (s, i) {
+        var m = miniatury[i];
+        return '<div class="karta"><div class="miniatura"><span class="tlo-m" style="background:' + m.bg + '"></span><span class="napis-m">' + esc(m.napis) + '</span>' +
+          '<span class="kbtn ' + s.cls + '">' + s.ik + '<span class="t">' + esc(s.t) + '</span></span><span class="czas">' + m.czas + '</span></div>' +
+          '<div class="meta"><b>' + esc(m.napis) + ' (przykład)</b><span>Kanał Twórcy · 48 tys. wyświetleń</span><span class="stan-karty">' + esc(s.opis) + '</span></div></div>';
+      }).join('') + '</div>';
+    }
+    el.innerHTML = html;
+  });
+
+  // Ikona Wtyczki: kierunek E (viewBox 128). W 16 px grubszy obrys i bez kreski pod strzałką.
+  function ikona(size, ciemneTlo) {
+    var obrys = ciemneTlo ? '#ffffff' : '#0f0f0f';
+    var maly = size <= 16;
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 128 128" role="img" aria-label="Ikona Wtyczki ' + size + ' px">' +
+      '<rect x="7" y="7" width="114" height="114" rx="26" fill="#ff0033" stroke="' + obrys + '" stroke-width="' + (maly ? 12 : 10) + '"/>' +
+      (maly
+        ? '<path d="M64 30v52" stroke="#fff" stroke-width="22" stroke-linecap="round"/><path d="M36 60l28 28 28-28" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>'
+        : '<path d="M64 28v50" stroke="#fff" stroke-width="18" stroke-linecap="round"/><path d="M38 58l26 26 26-26" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 100h60" stroke="#fff" stroke-width="14" stroke-linecap="round"/>') +
+      '</svg>';
+  }
+  document.querySelectorAll('[data-ikona]').forEach(function (el) {
+    el.innerHTML = ikona(+el.getAttribute('data-ikona'), el.getAttribute('data-tlo') === 'ciemne');
+  });
+
+  // Porównanie: zrzut z żywej strony nad tym samym rzędem z makiety
+  var zrzuty = [
+    ['youtube-film-jasny.png', 'Pod Filmem · jasny', 'film', false], ['youtube-film-ciemny.png', 'Pod Filmem · ciemny', 'film', true],
+    ['youtube-karta-jasny.png', 'Karta po najechaniu · jasny', 'karta', false], ['youtube-karta-ciemny.png', 'Karta po najechaniu · ciemny', 'karta', true]
+  ];
+  var box = document.querySelector('[data-zrzuty]');
+  box.innerHTML = zrzuty.map(function (z) {
+    var mock = z[2] === 'film'
+      ? '<div class="yt ' + (z[3] ? 'ciemny' : 'jasny') + '">' + rzadYT(stanyFilm[0]) + '</div>'
+      : '<div class="yt ' + (z[3] ? 'ciemny' : 'jasny') + '"><div class="karty"><div class="karta"><div class="miniatura"><span class="tlo-m" style="background:' + miniatury[0].bg + '"></span><span class="napis-m">' + esc(miniatury[0].napis) + '</span><span class="kbtn najechany">' + IK.pobierz + '<span class="t">' + esc(P.etykieta) + '</span></span><span class="czas">' + miniatury[0].czas + '</span></div></div></div></div>';
+    return '<div class="para"><figure class="zrzut" style="margin:0"><span class="etykieta">YouTube na żywo · ' + esc(z[1]) + '</span><img src="' + z[0] + '" alt="Zrzut YouTube: ' + esc(z[1]) + '" loading="lazy"></figure><span class="etykieta">Makieta · ' + esc(z[1]) + '</span>' + mock + '</div>';
+  }).join('');
+
+  var pomiary = [
+    ['Wysokość', '40 px', '40 px', '40 px'],
+    ['Zaokrąglenie', '20 px', '20 px', '20 px'],
+    ['Odstęp wewnętrzny', '0 16 px', '0 16 px 0 12 px', '0 16 px'],
+    ['Font', 'Roboto 14 px / 500', 'Roboto 14 px / 500', 'Roboto 14 px / 500'],
+    ['Ikona / odstęp ikona-napis', '24 px / 6 px', '24 px / 6 px', '24 px / 6 px'],
+    ['Tło jasny (zwykły / najechany)', 'czerń 5% / 10%', 'czerń 5% / 10%', 'czerń 5% / 10%'],
+    ['Tło ciemny (zwykły / najechany)', 'biel 10% / 20%', 'biel 10% / 20%', 'biel 10% / 20%'],
+    ['Tekst jasny / ciemny', '#0f0f0f / #f1f1f1', '#0f0f0f / #f1f1f1', '#0f0f0f / #f1f1f1'],
+    ['Karta: tło (zwykły / najechany)', 'znaczek czasu: czerń 60%', 'czerń 80% / #000', 'czerń 60% / 80%'],
+    ['Karta: font', 'znaczek czasu: 12 px / 500', '13 px / 500', '12 px / 500']
+  ];
+  document.querySelector('[data-pomiary]').innerHTML =
+    '<table class="pomiary"><thead><tr><th>Parametr</th><th>YouTube (zmierzone)</th><th>Obecny kod</th><th>Makieta</th></tr></thead><tbody>' +
+    pomiary.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>'; }).join('') +
+    '</tbody></table>';
+  box.querySelectorAll('img').forEach(function (img) {
+    img.addEventListener('error', function () {
+      var d = document.createElement('div'); d.className = 'brak'; d.textContent = 'Zrzut w przygotowaniu';
+      img.replaceWith(d);
+    });
+  });
+})();
+</script>
