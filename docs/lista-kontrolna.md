@@ -12,7 +12,7 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 ### 2. Ikona Wtyczki w pasku
 
 - **Krok:** Kliknij ikonę puzzla w pasku przeglądarki i przypnij „Miniaturki YouTube”.
-- **Oczekiwany wynik:** W pasku widać czerwoną kwadratową Ikonę Wtyczki z białą ramką i strzałką w dół (nie szary kwadrat z literą). Po najechaniu myszką pojawia się podpis „Otwórz Aplikację Miniaturki YouTube”.
+- **Oczekiwany wynik:** W pasku widać Ikonę Wtyczki: czerwony zaokrąglony kwadrat z ciemnym obrysem i białą pełną strzałką w dół nad kreską (nie szary kwadrat z literą). Strzałka jest czytelna także w małym rozmiarze, w jasnym i ciemnym pasku przeglądarki. Po najechaniu myszką pojawia się podpis „Otwórz Aplikację Miniaturki YouTube”.
 
 ### 3. Otwarcie Aplikacji
 
@@ -126,3 +126,37 @@ Przechodź ją po każdej zmianie w Wtyczce, w Przycisku pobierania albo w Aplik
 
 - **Krok:** Na `https://www.youtube.com/@YouTube/videos` pobierz kolejno 5 Miniaturek z kart.
 - **Oczekiwany wynik:** 5 plików w Pobranych, każdy z innym tytułem.
+
+## Wygląd Aplikacji
+
+Wzór: makieta `design/makieta/index.html` (https://claude.ai/artifact/HVrmYQpRdCKC3bK5Qz7BFL). Motyw Aplikacji idzie za systemem: przełączasz go w Ustawieniach systemowych → Wygląd → Jasny / Ciemny.
+
+### 23. Pusta Aplikacja w jasnym i ciemnym motywie
+
+- **Krok:** Otwórz Aplikację w jasnym motywie systemu, potem przełącz system na ciemny.
+- **Oczekiwany wynik:** Nagłówek „MINIATURKI YOUTUBE” wąskimi wersalikami, słowo „MINIATURKI” na czerwonym tle. Pole na linki, przełącznik Jakości i „Rozpoznaj” mają grube (2 px) obrysy: czarne w jasnym, białe w ciemnym motywie. Aktywna Jakość jest wypełniona czerwienią. „Pobierz wszystkie” jest wyłączony: bez wypełnienia, z jasnoszarym obrysem i szarym napisem (nie przezroczysty czerwony).
+
+### 24. Lista po „Rozpoznaj” i w trakcie pobierania
+
+- **Krok:** Wklej linki z punktu 4, kliknij „Rozpoznaj”, potem „Pobierz wszystkie”.
+- **Oczekiwany wynik:** Pod przyciskami „Filmów do pobrania: N” jest pogrubione, „pominiętych: M” zwykłe. Każdy wiersz ma ikonę stanu po lewej: przerywane kółko przy „Czeka” (tytuł chwilę „Wczytuję tytuł…” kursywą), obracający się czerwony łuk i pasek pod napisem przy „Pobieram…”, zielone kółko z ptaszkiem przy „Gotowe”. Wiersze pominięte mają przerywany szary obrys, przekreślone kółko i link pismem maszynowym.
+
+### 25. Wiersz z błędem
+
+- **Krok:** Wyłącz Wi-Fi, kliknij „Pobierz wszystkie” na liście z punktu 24, włącz Wi-Fi.
+- **Oczekiwany wynik:** Wiersze z błędem mają czerwony obrys, lekko czerwone tło, czerwone kółko z wykrzyknikiem i czerwony napis „Brak połączenia - spróbuj ponownie”. Czerwień błędu odróżnia się od czerwieni przycisku „Pobierz wszystkie” (błąd to obrys i napis, przycisk to wypełnienie).
+
+### 26. Wąskie okno i klawiatura
+
+- **Krok:** Zwęż okno przeglądarki do ok. 400 px, potem przejdź po Aplikacji klawiszem Tab.
+- **Oczekiwany wynik:** Napis stanu schodzi pod tytuł Filmu, przełącznik Jakości zawija się do drugiej linii zamiast wychodzić poza ramkę. Element wybrany klawiszem Tab ma czerwoną obwódkę z małym odstępem.
+
+### 27. Fonty bez internetu
+
+- **Krok:** Wyłącz Wi-Fi i otwórz Aplikację (Ikona Wtyczki).
+- **Oczekiwany wynik:** Wygląd jak w punkcie 23: wąski gruby nagłówek, pole z linkami pismem maszynowym. Fonty są w paczce Wtyczki, więc nie zależą od internetu.
+
+### 28. Przycisk pobierania po zmianach wyglądu
+
+- **Krok:** Powtórz punkty 11, 12 i 17.
+- **Oczekiwany wynik:** Pod Filmem „Miniaturka” ma po obu stronach równe odstępy, jak „Udostępnij”. Na karcie przycisk jest półprzezroczysty (widać przez niego Miniaturkę), po najechaniu na sam przycisk ciemnieje; napis jest drobny, wielkości znaczka czasu trwania.

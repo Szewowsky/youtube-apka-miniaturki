@@ -4,6 +4,7 @@ import type { WynikPobrania } from '../rdzen/pobieranie';
 import { jestJakoscia, odczytajJakosc, zapiszJakosc } from '../rdzen/ustawienia';
 import { rozpoznajListe, type Pozycja, type StatusPozycji } from '../rdzen/rozpoznawanie';
 import type { ZleceniePobrania } from '../wiadomosci';
+import { podzielNaglowek, podzielPodsumowanie, ZNAKI_STANU, type StanWiersza } from './wyglad';
 
 const PRZERWA_MIEDZY_POBRANIAMI_MS = 300;
 
@@ -19,7 +20,11 @@ const przyciskPobierz = element<HTMLButtonElement>('pobierz-wszystkie');
 const podsumowanie = element<HTMLParagraphElement>('podsumowanie');
 const lista = element<HTMLOListElement>('lista');
 
-element('naglowek').textContent = TEKSTY_APLIKACJI.naglowek;
+// Nagłówek: pierwsze słowo na czerwonym markerze (wytyczne, sekcja 2).
+const naglowek = podzielNaglowek(TEKSTY_APLIKACJI.naglowek);
+const marker = document.createElement('mark');
+marker.textContent = naglowek.wyrozniony;
+element('naglowek').replaceChildren(marker, naglowek.reszta);
 element('opis').textContent = TEKSTY_APLIKACJI.opis;
 element('etykieta-linkow').textContent = TEKSTY_APLIKACJI.poleLinkow;
 przyciskRozpoznaj.textContent = TEKSTY_APLIKACJI.rozpoznaj;
@@ -46,10 +51,10 @@ const OPIS_STATUSU: Record<Exclude<StatusPozycji, 'film'>, string> = {
   ponadLimit: KOMUNIKATY.ponadLimit,
 };
 
-type StanWiersza = 'czeka' | 'pobieram' | 'gotowe' | 'blad' | 'pominiety';
 type Wiersz = {
   pozycja: Pozycja;
   li: HTMLLIElement;
+  znak: HTMLElement;
   tytul: HTMLElement;
   kanal: HTMLElement;
   status: HTMLElement;
@@ -61,7 +66,12 @@ let trwaPobieranie = false;
 function utworzWiersz(pozycja: Pozycja): Wiersz {
   const li = document.createElement('li');
   li.className = 'pozycja';
-  li.dataset.status = pozycja.status === 'film' ? 'czeka' : 'pominiety';
+  const stan: StanWiersza = pozycja.status === 'film' ? 'czeka' : 'pominiety';
+  li.dataset.status = stan;
+
+  const znak = document.createElement('span');
+  znak.className = 'pozycja-znak';
+  znak.innerHTML = ZNAKI_STANU[stan];
 
   const opis = document.createElement('div');
   opis.className = 'pozycja-opis';
@@ -73,9 +83,18 @@ function utworzWiersz(pozycja: Pozycja): Wiersz {
 
   const status = document.createElement('span');
   status.className = 'pozycja-status';
+  // Pasek postępu widać tylko w stanie „pobieram” (CSS).
+  const pasek = document.createElement('span');
+  pasek.className = 'pasek-postepu';
+  pasek.setAttribute('aria-hidden', 'true');
+  pasek.append(document.createElement('i'));
+  const kolumnaStanu = document.createElement('span');
+  kolumnaStanu.className = 'pozycja-stan';
+  kolumnaStanu.append(status, pasek);
 
   if (pozycja.status === 'film') {
     tytul.textContent = TEKSTY_APLIKACJI.wczytuje;
+    tytul.classList.add('wczytuje');
     kanal.textContent = pozycja.link;
     status.textContent = KOMUNIKATY.czeka;
   } else {
@@ -83,14 +102,15 @@ function utworzWiersz(pozycja: Pozycja): Wiersz {
     status.textContent = OPIS_STATUSU[pozycja.status];
   }
 
-  li.append(opis, status);
+  li.append(znak, opis, kolumnaStanu);
   lista.append(li);
-  return { pozycja, li, tytul, kanal, status };
+  return { pozycja, li, znak, tytul, kanal, status };
 }
 
 async function uzupelnijMetadane(wiersz: Wiersz): Promise<void> {
   const id = wiersz.pozycja.id ?? '';
   const wynik = await pobierzMetadane(id, { fetch: (...a) => fetch(...a) });
+  wiersz.tytul.classList.remove('wczytuje');
   if (wynik.ok) {
     wiersz.tytul.textContent = wynik.tytul;
     wiersz.kanal.textContent = wynik.kanal;
@@ -102,6 +122,7 @@ async function uzupelnijMetadane(wiersz: Wiersz): Promise<void> {
 }
 
 function ustawStan(wiersz: Wiersz, stan: StanWiersza, tekst: string): void {
+  if (wiersz.li.dataset.status !== stan) wiersz.znak.innerHTML = ZNAKI_STANU[stan];
   wiersz.li.dataset.status = stan;
   wiersz.status.textContent = tekst;
 }
@@ -124,10 +145,13 @@ function rozpoznaj(): void {
   const filmy = wiersze.filter((w) => w.pozycja.status === 'film');
 
   podsumowanie.hidden = pozycje.length === 0;
-  podsumowanie.textContent = TEKSTY_APLIKACJI.podsumowanieRozpoznania(
-    filmy.length,
-    pozycje.length - filmy.length,
+  const { wyrozniony, reszta } = podzielPodsumowanie(
+    TEKSTY_APLIKACJI.podsumowanieRozpoznania(filmy.length, pozycje.length - filmy.length),
+    TEKSTY_APLIKACJI.podsumowanieRozpoznania(filmy.length, 0),
   );
+  const pogrubienie = document.createElement('b');
+  pogrubienie.textContent = wyrozniony;
+  podsumowanie.replaceChildren(pogrubienie, reszta);
 
   odswiezPrzyciski();
   void Promise.all(filmy.map(uzupelnijMetadane));
