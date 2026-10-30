@@ -179,3 +179,8 @@ Wzór: makieta `design/makieta/index.html` (https://claude.ai/artifact/HVrmYQpRd
 
 - **Krok:** Na stronie głównej najedź na Miniaturkę, poczekaj, aż ruszy podgląd, i przesuń kursor powoli na sąsiednią kartę (w bok i w dół). Potem zostaw kursor na Miniaturce i przewiń stronę kółkiem myszy. Na koniec wyjedź kursorem poza okno przeglądarki.
 - **Oczekiwany wynik:** Przycisk „Miniaturka” widać zawsze tylko na jednej karcie - tej, nad którą jest kursor (także gdy kursor jest na brzegu grającego podglądu). Po przewinięciu przycisk przeskakuje na kartę, która znalazła się pod kursorem. Po wyjściu kursora poza okno żaden przycisk nie zostaje widoczny.
+
+### 32. Przycisk nad podglądem w wynikach wyszukiwania
+
+- **Krok:** Otwórz `https://www.youtube.com/results?search_query=rick+astley+never+gonna+give+you+up`, najedź na Miniaturkę pierwszego Filmu i trzymaj kursor, aż ruszy podgląd wideo. Kliknij „Miniaturka”. Potem przewiń stronę tak, żeby karta weszła pod górny pasek YouTube, i najedź kursorem na pasek nad nią.
+- **Oczekiwany wynik:** Przycisk „Miniaturka” jest widoczny nad grającym podglądem i po kliknięciu pokazuje „Pobieram…”, potem „Gotowe”, bez otwierania Filmu. Nad górnym paskiem YouTube przycisk nigdy się nie pokazuje. Dymki podpowiedzi i pasek filtrów nad wynikami wyglądają jak zwykle.

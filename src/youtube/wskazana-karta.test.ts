@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { wskazanaKarta } from './wskazana-karta';
+import { otworzycWarstweListy, wskazanaKarta } from './wskazana-karta';
 
 type Karta = { id: string };
 const a: Karta = { id: 'aaaaaaaaaaa' };
@@ -51,5 +51,21 @@ describe('wskazanaKarta', () => {
     expect(
       wskazanaKarta({ karty: [], idPodgladu: a.id }, a, () => undefined),
     ).toBeUndefined();
+  });
+});
+
+describe('otworzycWarstweListy', () => {
+  const wWyszukiwarce = (k: Karta) => k === a;
+
+  it('otwiera warstwę, gdy wskazana karta leży w wynikach wyszukiwania', () => {
+    expect(otworzycWarstweListy(a, wWyszukiwarce)).toBe(true);
+  });
+
+  it('nie otwiera, gdy wskazana karta leży poza wynikami wyszukiwania', () => {
+    expect(otworzycWarstweListy(b, wWyszukiwarce)).toBe(false);
+  });
+
+  it('nie otwiera, gdy żadna karta nie jest wskazana', () => {
+    expect(otworzycWarstweListy(undefined, wWyszukiwarce)).toBe(false);
   });
 });

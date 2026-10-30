@@ -7,7 +7,7 @@ import './przycisk.css';
 import { idFilmuZLinku, idOgladanegoFilmu, jestStronaShorta } from './id-filmu';
 import { PREFIKS, utworzPrzycisk } from './przycisk';
 import { SELEKTORY } from './selektory';
-import { wskazanaKarta } from './wskazana-karta';
+import { otworzycWarstweListy, wskazanaKarta } from './wskazana-karta';
 
 function wstawPodFilmem(): void {
   if (jestStronaShorta(location.pathname) || location.pathname !== '/watch') return;
@@ -67,6 +67,7 @@ function zaplanuj(): void {
 // dopóki kursor jest nad nią albo nad jej podglądem.
 const KLASA_WSKAZANY = `${PREFIKS}-wskazany`;
 const KLASA_NAD_PRZYCISKIEM = `${PREFIKS}-nad-przyciskiem`;
+const KLASA_OTWARTA_LISTA = `${PREFIKS}-otwarta-lista`;
 const SELEKTOR_PRZYCISKU_KARTY = `.${PREFIKS}-przycisk-karta`;
 let wskazana: Element | undefined;
 let kursor: { x: number; y: number } | undefined;
@@ -96,6 +97,12 @@ function ustawWskazana(karta: Element | undefined): void {
   wskazana?.querySelector(SELEKTOR_PRZYCISKU_KARTY)?.classList.remove(KLASA_WSKAZANY);
   wskazana = karta;
   wskazana?.querySelector(SELEKTOR_PRZYCISKU_KARTY)?.classList.add(KLASA_WSKAZANY);
+  // Karta w wynikach wyszukiwania: na czas wskazania otwieramy ich warstwę, żeby przycisk
+  // wyszedł ponad podgląd (przycisk.css, docs/selektory-youtube.md 3.5).
+  document.documentElement.classList.toggle(
+    KLASA_OTWARTA_LISTA,
+    otworzycWarstweListy(wskazana, (k) => Boolean(k.closest(SELEKTORY.zamknietaWarstwaListy))),
+  );
 }
 
 function sprawdzKursor(): void {
