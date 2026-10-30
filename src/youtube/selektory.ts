@@ -24,6 +24,8 @@ export const SELEKTORY = {
   // (ytd-app > #video-preview > ytd-video-preview-loader > div > ytd-video-preview).
   // Aktywny ma klasę ytdVideoPreviewActive; link w środku niesie ID Filmu z karty.
   podgladAktywny: 'ytd-video-preview.ytdVideoPreviewActive',
+  // Wyniki wyszukiwania zamykają swoją warstwę (z-index: 0), więc podgląd przykrywa przycisk.
+  zamknietaWarstwaListy: 'ytd-search',
   linkPodgladu: 'a[href*="watch?v="]',
 
   zdarzenieNawigacji: 'yt-navigate-finish',

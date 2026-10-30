@@ -77,7 +77,8 @@ html[dark] .mty-przycisk[data-stan='blad'] {
   position: absolute;
   top: 8px;
   left: 8px;
-  z-index: 3000;
+  /* Nad podglądem wideo (z-index: auto), ale pod górnym paskiem YouTube (#masthead-container: 2020). */
+  z-index: 2019;
   height: 32px;
   padding: 0 10px 0 6px;
   border-radius: 16px;
@@ -111,6 +112,12 @@ ytd-video-renderer:hover .mty-przycisk-karta,
 
 .mty-przycisk-karta[data-stan='zwykly']:hover {
   background: rgba(0, 0, 0, 0.8);
+}
+
+/* Wyniki wyszukiwania (ytd-search, z-index: 0) zamykają warstwę, z której przycisk nie wyjdzie
+   ponad podgląd. Otwieramy ją tylko, gdy wskazana jest karta w wynikach (klasa z content.ts). */
+html.mty-otwarta-lista ytd-search {
+  z-index: auto !important;
 }
 
 /* Kursor nad przyciskiem na karcie: chowamy podgląd wideo YouTube, który go przykrywa. */

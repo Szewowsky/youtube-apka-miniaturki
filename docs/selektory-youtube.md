@@ -266,6 +266,16 @@ Test: przycisk wstawiony do `yt-thumbnail-view-model` z `position:absolute; top:
 
 Rozwiązanie w kodzie: widocznością steruje skrypt (`src/youtube/content.ts`, klasa `.mty-wskazany`). Karta jest wskazana, gdy w `elementsFromPoint` pod kursorem jest jej element, albo gdy kursor jest nad aktywnym podglądem (`SELEKTORY.podgladAktywny`), którego link ma ID tej karty. Klasa schodzi dopiero po wyjściu z karty i z jej podglądu.
 
+**Warstwy (pomiar 2026-10-30, ticket #31).** Przycisk wygrywa z podglądem tylko wtedy, gdy żaden jego przodek nie zamyka warstwy (stacking context):
+
+| Strona | Przodek zamykający warstwę | Przycisk nad podglądem |
+|---|---|---|
+| Strona główna, kanał, kolumna obok Filmu | brak | tak |
+| Wyniki wyszukiwania | `ytd-search` (`position: relative; z-index: 0`) | nie - podgląd leży poza `ytd-search`, w `ytd-app` |
+
+- Górny pasek YouTube: `#masthead-container`, `position: fixed; z-index: 2020`. Przycisk ma `z-index: 2019`: nad podglądem (`z-index: auto`), pod paskiem, więc karta przewinięta pod pasek nie pokaże na nim przycisku.
+- W `ytd-search` są elementy z wysokim `z-index` (dymki `tp-yt-paper-tooltip` 1002, strzałki filtrów 200, `#back-button` 2019), dlatego nie zdejmujemy jego `z-index: 0` na stałe. Robi to klasa `html.mty-otwarta-lista` (`SELEKTORY.zamknietaWarstwaListy`), włączana tylko na czas wskazania karty leżącej w `ytd-search`.
+
 Wniosek: **przycisk w lewym górnym rogu Miniaturki** (prawy górny zajmują kontrolki podglądu, prawy dolny - czas trwania, dół - pasek postępu). Wysoki `z-index`. Ponieważ przycisk jest wewnątrz `<a>`, handler kliknięcia musi robić `preventDefault()` + `stopPropagation()` (inaczej otworzy się Film). Wariant bezpieczniejszy: wstawić przycisk do `div.ytLockupViewModelHost` (rodzic linku) z pozycjonowaniem względem Miniaturki - ale ten div nie ma `position: relative`, więc wymaga własnego stylu; do przetestowania przy implementacji.
 
 ---

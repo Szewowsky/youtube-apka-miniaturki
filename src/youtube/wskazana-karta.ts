@@ -23,3 +23,15 @@ export function wskazanaKarta<K>(
   }
   return pod.karty[0];
 }
+
+/**
+ * Czy otworzyć warstwę listy, w której leży wskazana karta. Wyniki wyszukiwania (ytd-search)
+ * zamykają swoją warstwę (z-index: 0), więc przycisk nie wyjdzie ponad podgląd wideo leżący poza
+ * nimi. Otwieramy ją tylko na czas wskazania karty: w środku są dymki i strzałki z wysokim z-index.
+ */
+export function otworzycWarstweListy<K>(
+  wskazana: K | undefined,
+  wZamknietejWarstwie: (karta: K) => boolean,
+): boolean {
+  return wskazana !== undefined && wZamknietejWarstwie(wskazana);
+}
